@@ -1,4 +1,4 @@
-import { PartialTranslations } from 'translations/default';
+import { PartialTranslations } from './default';
 
 export const translationsBundleNn: PartialTranslations = {
     office: {
