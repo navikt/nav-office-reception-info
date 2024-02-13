@@ -1,3 +1,4 @@
+import React from "react";
 import { BodyShort, Heading } from "@navikt/ds-react";
 import {
   ClockFillIcon,
@@ -13,7 +14,7 @@ import {
 import { formatAddress } from "./utils/utils";
 import { OpeningHours } from "./OpeningHours";
 
-import styles from "./SingleReception.module.scss";
+// import styles from "./SingleReception.module.scss";
 
 interface FormattedAudienceReception {
   address: string;
@@ -90,27 +91,48 @@ export const SingleReception = (props: SingleReceptionProps) => {
     });
 
   return (
-    <div className={styles.singleReception}>
-      <Heading level="3" size="medium" spacing className={styles.heading}>
+    <div
+    // className={styles.singleReception}
+    >
+      <Heading
+        level="3"
+        size="medium"
+        spacing
+        //   className={styles.heading}
+      >
         <HouseFillIcon
           aria-hidden="true"
-          className={`${styles.headingIcon} ${styles.iconPlace}`}
+          //   className={`${styles.headingIcon} ${styles.iconPlace}`}
         />
         {getLabel("address")}
       </Heading>
-      <section className={styles.address}>
-        <BodyShort className={styles.addressLine}>{address}</BodyShort>
-        <BodyShort className={styles.addressLine} size="small">
+      <section
+      //   className={styles.address}
+      >
+        <BodyShort
+        // className={styles.addressLine}
+        >
+          {address}
+        </BodyShort>
+        <BodyShort
+          // className={styles.addressLine}
+          size="small"
+        >
           {adkomstbeskrivelse}
         </BodyShort>
       </section>
 
       {openingHours.length > 0 && (
         <>
-          <Heading level="3" size="medium" spacing className={styles.heading}>
+          <Heading
+            level="3"
+            size="medium"
+            spacing
+            //   className={styles.heading}
+          >
             <ClockFillIcon
               aria-hidden="true"
-              className={`${styles.headingIcon} ${styles.iconClock}`}
+              //   className={`${styles.headingIcon} ${styles.iconClock}`}
             />
             {getLabel("openingHoursWithoutAppointment")}
           </Heading>
@@ -128,9 +150,11 @@ export const SingleReception = (props: SingleReceptionProps) => {
           />
         </>
       )}
-      <div className={styles.appointmentBookingInfo}>
+      <div
+      //   className={styles.appointmentBookingInfo}
+      >
         <InformationSquareFillIcon
-          className={styles.iconInfo}
+          //   className={styles.iconInfo}
           aria-hidden="true"
         />
         {getLabel("youCanMakeAppointment")}
