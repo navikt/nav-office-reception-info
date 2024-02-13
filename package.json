@@ -2,8 +2,11 @@
   "name": "nav-office-reception-info",
   "version": "1.0.0",
   "description": "",
-  "main": "src/Reception.tsx",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "type": "module",
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -11,5 +14,17 @@
   "peerDependencies": {
     "@navikt/ds-react": "^5.17.5",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.23.7",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "7.23.3",
+    "@rollup/plugin-babel": "6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@types/react": "^18.2.55",
+    "rollup": "4.9.6",
+    "rollup-plugin-typescript2": "0.36.0",
+    "typescript": "4.9.5"
   }
 }
