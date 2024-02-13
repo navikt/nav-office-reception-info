@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { BodyLong, Tabs } from '@navikt/ds-react';
-import { AudienceReception } from '../../../../types/content-props/office-details-props';
-
+import { AudienceReception } from './utils/types';
 import { SingleReception } from './SingleReception';
-import { translator } from 'translations';
-import { usePageConfig } from 'store/hooks/usePageConfig';
+import { translator } from './utils/translations';
 
 import styles from './Reception.module.scss';
-import { forceArray } from 'utils/arrays';
 
 interface LocationsProps {
-    receptions: AudienceReception[] | AudienceReception;
+    receptions: AudienceReception[];
+    language: string;
 }
 
-export const Reception = ({ receptions }: LocationsProps) => {
-    const { language } = usePageConfig();
-    const receptionArray = forceArray(receptions);
-    const getOfficeTranslations = translator('office', language);
+const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
+    return ['no', 'nn', 'en'].includes(lang)
+        ? (lang as 'no' | 'nn' | 'en')
+        : 'no';
+};
+
+export const Reception = ({ receptions, language }: LocationsProps) => {
+    const languageValidated = validateLanguage(language);
+
+    const getOfficeTranslations = translator('office', languageValidated);
 
     const getLocation = (reception: AudienceReception) => {
         if (!reception) {
@@ -33,17 +37,20 @@ export const Reception = ({ receptions }: LocationsProps) => {
         return label.replace(/\s/g, '-').toLowerCase();
     };
 
-    const firstLocation = getLocation(receptionArray[0]);
+    const firstLocation = getLocation(receptions[0]);
     const [state, setState] = useState(getIdFromLabel(firstLocation));
 
-    if (!receptionArray || receptionArray.length === 0) {
+    if (!receptions || receptions.length === 0) {
         return null;
     }
 
-    if (receptionArray.length === 1) {
+    if (receptions.length === 1) {
         return (
             <div className={styles.singleTab}>
-                <SingleReception {...receptionArray[0]} />
+                <SingleReception
+                    {...receptions[0]}
+                    language={languageValidated}
+                />
             </div>
         );
     }
@@ -59,7 +66,7 @@ export const Reception = ({ receptions }: LocationsProps) => {
                 className={styles.officeTabs}
             >
                 <Tabs.List>
-                    {receptionArray.map((loc: AudienceReception, index) => {
+                    {receptions.map((loc: AudienceReception, index) => {
                         const locationLabel = getLocation(loc);
                         return (
                             <Tabs.Tab
@@ -70,7 +77,7 @@ export const Reception = ({ receptions }: LocationsProps) => {
                         );
                     })}
                 </Tabs.List>
-                {receptionArray.map((loc: AudienceReception, index) => {
+                {receptions.map((loc: AudienceReception, index) => {
                     const locationLabel = getLocation(loc);
                     return (
                         <Tabs.Panel
@@ -78,7 +85,10 @@ export const Reception = ({ receptions }: LocationsProps) => {
                             value={getIdFromLabel(locationLabel)}
                             className={styles.singleTab}
                         >
-                            <SingleReception {...loc} />
+                            <SingleReception
+                                {...loc}
+                                language={languageValidated}
+                            />
                         </Tabs.Panel>
                     );
                 })}
