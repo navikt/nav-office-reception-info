@@ -1,18 +1,13 @@
 import { Address, LegacyOfficeAddress } from './types';
 import dayjs from 'dayjs';
 
-export const formatAddress = (
-    address?: Address | LegacyOfficeAddress,
-    withZip?: boolean
-) => {
+export const formatAddress = (address?: Address | LegacyOfficeAddress, withZip?: boolean) => {
     if (!address) {
         return '';
     }
     let formatedAddress: string;
     if (address.type === 'postboksadresse') {
-        const postboksanlegg = address.postboksanlegg
-            ? ` ${address.postboksanlegg}`
-            : '';
+        const postboksanlegg = address.postboksanlegg ? ` ${address.postboksanlegg}` : '';
         formatedAddress = `Postboks ${address.postboksnummer}${postboksanlegg}`;
     } else {
         const husnummer = address.husnummer ? ` ${address.husnummer}` : '';
@@ -34,12 +29,7 @@ interface FormatDateProps {
     year?: boolean;
 }
 
-export const formatDate = ({
-    datetime,
-    language = 'nb',
-    short = false,
-    year = false,
-}: FormatDateProps) => {
+export const formatDate = ({ datetime, language = 'nb', short = false, year = false }: FormatDateProps) => {
     const currentLocale = language === 'en' ? 'en-gb' : 'nb';
 
     let format: string;
@@ -52,7 +42,5 @@ export const formatDate = ({
         format = 'L';
     }
 
-    return datetime
-        ? dayjs(datetime).locale(currentLocale).format(format)
-        : datetime;
+    return datetime ? dayjs(datetime).locale(currentLocale).format(format) : datetime;
 };

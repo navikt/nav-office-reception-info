@@ -8,19 +8,10 @@ export const translationsBundleNn: PartialTranslations = {
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Spesielle åpningstider',
         address: 'Adresse',
-        youCanMakeAppointment:
-            'Du kan avtale møte med rettleiaren din utanom desse opningstidene.',
+        youCanMakeAppointment: 'Du kan avtale møte med rettleiaren din utanom desse opningstidene.',
     },
     dateTime: {
-        weekDayNames: [
-            'Måndag',
-            'Tysdag',
-            'Onsdag',
-            'Torsdag',
-            'Fredag',
-            'Laurdag',
-            'Søndag',
-        ],
+        weekDayNames: ['Måndag', 'Tysdag', 'Onsdag', 'Torsdag', 'Fredag', 'Laurdag', 'Søndag'],
         time: 'tid',
         day: 'dag',
     },

@@ -8,19 +8,10 @@ export const translationsBundleEn: PartialTranslations = {
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Special opening hours',
         address: 'Address',
-        youCanMakeAppointment:
-            'You can book a meeting with your advisor outside of these opening hours.',
+        youCanMakeAppointment: 'You can book a meeting with your advisor outside of these opening hours.',
     },
     dateTime: {
-        weekDayNames: [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday',
-        ],
+        weekDayNames: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         time: 'time',
         day: 'day',
     },

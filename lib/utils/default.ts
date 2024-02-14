@@ -10,19 +10,10 @@ export const translationsBundleNb = {
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Spesielle åpningstider',
         address: 'Adresse',
-        youCanMakeAppointment:
-            'Du kan avtale møte med veilederen din utenom disse åpningstidene.',
+        youCanMakeAppointment: 'Du kan avtale møte med veilederen din utenom disse åpningstidene.',
     },
     dateTime: {
-        weekDayNames: [
-            'Mandag',
-            'Tirsdag',
-            'Onsdag',
-            'Torsdag',
-            'Fredag',
-            'Lørdag',
-            'Søndag',
-        ],
+        weekDayNames: ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'],
         time: 'tid',
         day: 'dag',
     },
