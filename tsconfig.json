@@ -20,12 +20,6 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
-    "include": [
-        "src",
-        "lib/utils",
-        "lib/OpeningHours.tsx",
-        "lib/Reception.tsx",
-        "lib/SingleReception.tsx"
-    ],
+    "include": ["src", "lib"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
