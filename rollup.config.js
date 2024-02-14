@@ -5,7 +5,7 @@ import commonjs from '@rollup/plugin-commonjs';
 
 // import commonjs from "@rollup/plugin-commonjs";
 // import npmImport from "less-plugin-npm-import";
-// import external from "rollup-plugin-peer-deps-external";
+import external from 'rollup-plugin-peer-deps-external';
 // import postcss from "rollup-plugin-postcss";
 // import resolve from "@rollup/plugin-node-resolve";
 // import json from "@rollup/plugin-json";
@@ -33,6 +33,8 @@ export default {
     ],
 
     plugins: [
+        external(),
+
         nodeResolve(),
         commonjs(),
         typescript({
