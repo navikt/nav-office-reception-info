@@ -1,7 +1,7 @@
 import React from 'react';
-import { translator } from './utils/translations';
-import { formatDate } from './utils/utils';
-import { Language, OpeningHours as OpeningHoursProps } from './utils/types';
+import { translator } from '../lib/utils/translations';
+import { formatDate } from '../lib/utils/utils';
+import { Language, OpeningHours as OpeningHoursProps } from '../lib/utils/types';
 import { Table } from '@navikt/ds-react';
 
 // import styles from "./OpeningHours.module.scss";

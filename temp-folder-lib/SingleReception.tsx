@@ -1,9 +1,9 @@
 import React from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { ClockFillIcon, InformationSquareFillIcon, HouseFillIcon } from '@navikt/aksel-icons';
-import { translator } from './utils/translations';
-import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from './utils/types';
-import { formatAddress } from './utils/utils';
+import { translator } from '../lib/utils/translations';
+import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from '../lib/utils/types';
+import { formatAddress } from '../lib/utils/utils';
 import { OpeningHours } from './OpeningHours';
 
 // import styles from "./SingleReception.module.scss";
