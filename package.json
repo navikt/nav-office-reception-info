@@ -2,7 +2,7 @@
     "name": "nav-office-reception-info",
     "version": "0.0.0",
     "type": "module",
-    "main": "dist/main.js",
+    "main": "dist/nav-office-reception-info.js",
     "types": "dist/main.d.ts",
     "files": [
         "dist"
@@ -33,5 +33,9 @@
         "typescript": "^5.2.2",
         "vite": "^5.1.0",
         "vite-plugin-dts": "^3.7.2"
+    },
+    "dependencies": {
+        "@navikt/ds-react": "^5.18.1",
+        "dayjs": "^1.11.10"
     }
 }
