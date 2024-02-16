@@ -1,4 +1,3 @@
-import React from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { ClockFillIcon, InformationSquareFillIcon, HouseFillIcon } from '@navikt/aksel-icons';
 import { translator } from '../../utils/translations.ts';

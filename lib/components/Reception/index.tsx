@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BodyLong, Tabs } from '@navikt/ds-react';
 import { AudienceReception } from '../../utils/types.ts';
 import { SingleReception } from '../SingleReception';
