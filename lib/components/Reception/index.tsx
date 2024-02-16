@@ -4,7 +4,7 @@ import { AudienceReception } from '../../utils/types.ts';
 import { SingleReception } from '../SingleReception';
 import { translator } from '../../utils/translations.ts';
 
-// import styles from './Reception.module.scss';
+import styles from './Reception.module.scss';
 
 interface LocationsProps {
     receptions: AudienceReception[];
@@ -40,9 +40,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
 
     if (receptions.length === 1) {
         return (
-            <div
-            //   className={styles.singleTab}
-            >
+            <div className={styles.singleTab}>
                 <SingleReception {...receptions[0]} language={languageValidated} />
             </div>
         );
