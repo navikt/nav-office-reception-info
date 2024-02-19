@@ -11,7 +11,6 @@ export default defineConfig({
             entry: resolve(__dirname, 'lib/main.ts'),
             formats: ['es'],
         },
-        copyPublicDir: false, //TODO fjern og slett public-mappa helt?
         rollupOptions: {
             external: ['react', 'react/jsx-runtime'],
         },
