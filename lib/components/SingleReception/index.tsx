@@ -5,7 +5,7 @@ import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from '
 import { formatAddress } from '../../utils/utils.ts';
 import { OpeningHours } from '../OpeningHours';
 
-// import styles from "./SingleReception.module.scss";
+import styles from './SingleReception.module.scss';
 
 interface FormattedAudienceReception {
     address: string;
@@ -77,49 +77,22 @@ export const SingleReception = (props: SingleReceptionProps) => {
         });
 
     return (
-        <div
-        // className={styles.singleReception}
-        >
-            <Heading
-                level="3"
-                size="medium"
-                spacing
-                //   className={styles.heading}
-            >
-                <HouseFillIcon
-                    aria-hidden="true"
-                    //   className={`${styles.headingIcon} ${styles.iconPlace}`}
-                />
+        <div className={styles.singleReception}>
+            <Heading level="3" size="medium" spacing className={styles.heading}>
+                <HouseFillIcon aria-hidden="true" className={`${styles.headingIcon} ${styles.iconPlace}`} />
                 {getLabel('address')}
             </Heading>
-            <section
-            //   className={styles.address}
-            >
-                <BodyShort
-                // className={styles.addressLine}
-                >
-                    {address}
-                </BodyShort>
-                <BodyShort
-                    // className={styles.addressLine}
-                    size="small"
-                >
+            <section className={styles.address}>
+                <BodyShort className={styles.addressLine}>{address}</BodyShort>
+                <BodyShort className={styles.addressLine} size="small">
                     {adkomstbeskrivelse}
                 </BodyShort>
             </section>
 
             {openingHours.length > 0 && (
                 <>
-                    <Heading
-                        level="3"
-                        size="medium"
-                        spacing
-                        //   className={styles.heading}
-                    >
-                        <ClockFillIcon
-                            aria-hidden="true"
-                            //   className={`${styles.headingIcon} ${styles.iconClock}`}
-                        />
+                    <Heading level="3" size="medium" spacing className={styles.heading}>
+                        <ClockFillIcon aria-hidden="true" className={`${styles.headingIcon} ${styles.iconClock}`} />
                         {getLabel('openingHoursWithoutAppointment')}
                     </Heading>
                     <OpeningHours openingHours={openingHours} language={language} />
@@ -133,13 +106,8 @@ export const SingleReception = (props: SingleReceptionProps) => {
                     <OpeningHours openingHours={futureOpeningHoursExceptions} language={language} />
                 </>
             )}
-            <div
-            //   className={styles.appointmentBookingInfo}
-            >
-                <InformationSquareFillIcon
-                    //   className={styles.iconInfo}
-                    aria-hidden="true"
-                />
+            <div className={styles.appointmentBookingInfo}>
+                <InformationSquareFillIcon className={styles.iconInfo} aria-hidden="true" />
                 {getLabel('youCanMakeAppointment')}
             </div>
         </div>

@@ -48,16 +48,8 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
 
     return (
         <>
-            <BodyLong
-            //   className={styles.chooseBetweenOffices}
-            >
-                {getOfficeTranslations('chooseBetweenOffices')}
-            </BodyLong>
-            <Tabs
-                value={state}
-                onChange={setState}
-                //   className={styles.officeTabs}
-            >
+            <BodyLong className={styles.chooseBetweenOffices}>{getOfficeTranslations('chooseBetweenOffices')}</BodyLong>
+            <Tabs value={state} onChange={setState} className={styles.officeTabs}>
                 <Tabs.List>
                     {receptions.map((loc: AudienceReception, index) => {
                         const locationLabel = getLocation(loc);
@@ -67,11 +59,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
                 {receptions.map((loc: AudienceReception, index) => {
                     const locationLabel = getLocation(loc);
                     return (
-                        <Tabs.Panel
-                            key={index}
-                            value={getIdFromLabel(locationLabel)}
-                            //   className={styles.singleTab}
-                        >
+                        <Tabs.Panel key={index} value={getIdFromLabel(locationLabel)} className={styles.singleTab}>
                             <SingleReception {...loc} language={languageValidated} />
                         </Tabs.Panel>
                     );

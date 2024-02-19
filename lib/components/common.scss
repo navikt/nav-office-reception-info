@@ -1,0 +1,234 @@
+@forward '@navikt/ds-tokens/dist/tokens';
+@use '@navikt/ds-tokens/dist/tokens' as *;
+@use 'sass:math';
+
+$pixel-size-rem: math.div(1, 16);
+
+// In Sass numbers can include units (px/rem/em/vw/cm) witch can fuck up doing math
+@function stripUnit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+    @return $number;
+}
+
+@function px-to-rem($px) {
+    @return stripUnit($px) * $pixel-size-rem * 1rem;
+}
+
+@function round-rem($value: 0) {
+    $valueUpper: $value + $pixel-size-rem / 2;
+    @return $valueUpper - ($valueUpper % $pixel-size-rem);
+}
+
+// Screen size breakpoints
+$mobileMaxWidth: 48rem; // 768px
+$tabletMinWidth: $mobileMaxWidth;
+$tabletMaxWidth: 64rem; // 1024px
+$desktopMinWidth: $tabletMaxWidth;
+$desktopSmallMinWidth: 75rem; // 1200px
+$desktopMaxWidth: 90rem; // 1440px
+
+$mq-screen-mobile: 'only screen and (max-width: #{$mobileMaxWidth})';
+$mq-screen-tablet: 'only screen and (min-width: #{$tabletMinWidth}) and (max-width: #{$tabletMaxWidth})';
+$mq-screen-tablet-and-desktop: 'only screen and (min-width: #{$tabletMinWidth}) ';
+$mq-screen-tablet-and-mobile: 'only screen and (max-width: #{$tabletMaxWidth}) ';
+$mq-screen-desktop: 'only screen and (min-width: #{$desktopMinWidth}) ';
+$mq-screen-desktop-small-up: 'only screen and (min-width: #{$desktopSmallMinWidth}) ';
+$mq-screen-desktop-large: 'only screen and (min-width: #{$desktopMaxWidth}) ';
+
+// Index page breakpoints
+$mobileSmallMaxWidth: 30rem; // 480px
+$desktopSmallMaxWidth: 75rem; // 1200px
+$mq-screen-mobile-small: 'only screen and (max-width: #{$mobileSmallMaxWidth})';
+$mq-screen-desktop-small: 'only screen and (max-width: #{$desktopSmallMaxWidth})';
+
+// Max-width for SituationPage & Layouts
+$contentMaxWidth: px-to-rem(900);
+$sectionMaxWidth: calc(#{$contentMaxWidth} * 2 / 3);
+
+$padding-sides-desktop: 3rem;
+$padding-sides-tablet: 1rem;
+$padding-sides-mobile: 0.5rem;
+
+$sectionPaddingDesktop: 2.5rem;
+$sectionPaddingTablet: 1.6rem;
+$sectionPaddingMobile: 1rem;
+$border-radius-small: 2px;
+$border-radius-base: 4px;
+$border-radius-large: 6px;
+$border-radius-xlarge: 8px;
+
+// Varaibles for CMS-editor
+$editorPaddingVertical: 2rem;
+$editorPaddingHorizontal: $editorPaddingVertical * 1.62;
+$versionSelectorMinHeight: 3rem;
+
+// Makes the element cover the entire screen-width
+@mixin full-width-mixin($left: true, $right: true) {
+    $side-width: calc((100vw - 100%) / 2);
+    $side-width-negative: calc((100vw - 100%) / -2);
+
+    @if $left {
+        padding-left: $side-width;
+        margin-left: $side-width-negative;
+    }
+
+    @if $right {
+        padding-right: $side-width;
+        margin-right: $side-width-negative;
+    }
+}
+
+@mixin flex-cols-mixin($numCols, $marginX: 1.5rem, $marginY: 1.5rem) {
+    & > * {
+        $numColsPlus1: $numCols + 1;
+        display: flex;
+        flex-grow: 1;
+        flex-shrink: 0;
+        flex-basis: calc(percentage(1 / $numColsPlus1) + 1px);
+        max-width: calc(
+            #{percentage(1 / $numCols)} - #{($marginX * ($numCols - 1)) /
+                $numCols} + 1px
+        );
+
+        &:not(:last-child) {
+            margin-right: $marginX;
+        }
+
+        &:nth-child(#{($numCols)}n + #{$numCols}) {
+            margin-right: 0;
+        }
+
+        &:nth-child(n + #{$numColsPlus1}) {
+            margin-top: $marginY;
+        }
+    }
+}
+
+@mixin grid-layout-mixin(
+    $numCols: 3,
+    $rowGap: 1.5rem,
+    $colGap: 1.5rem,
+    $rowGapMobileSmall: 0.5rem,
+    $columnGapMobileSmall: 0.5rem
+) {
+    display: grid;
+    row-gap: $rowGap;
+    column-gap: $colGap;
+    grid-template-columns: repeat($numCols, 1fr);
+
+    @media #{$mq-screen-desktop-small} {
+        grid-template-columns: repeat(math.max($numCols - 1, 2), 1fr);
+    }
+
+    @media #{$mq-screen-mobile} {
+        grid-template-columns: repeat(math.max($numCols - 2, 1), 1fr);
+    }
+
+    @media #{$mq-screen-mobile-small} {
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: $rowGapMobileSmall;
+        column-gap: $columnGapMobileSmall;
+    }
+}
+
+@mixin section-padding-mixin() {
+    padding: $sectionPaddingDesktop;
+
+    @media #{$mq-screen-tablet} {
+        padding: $sectionPaddingTablet;
+    }
+
+    @media #{$mq-screen-mobile} {
+        padding: $sectionPaddingMobile;
+    }
+}
+
+@mixin expandable-panel-mixin() {
+    $focusPadding: 1rem;
+    box-shadow: none;
+    border-bottom: 0;
+    padding-left: $focusPadding;
+    padding-right: $focusPadding;
+    margin: 0 (-$focusPadding);
+    width: calc(100% + #{$focusPadding} * 2);
+}
+
+@mixin panel-focus-mixin($inset: true) {
+    outline: unset;
+    box-shadow: 0 0 0 3px if($inset, inset, null) $a-border-focus;
+}
+
+@mixin section-padding-mixin() {
+    padding: $sectionPaddingDesktop;
+
+    @media #{$mq-screen-tablet} {
+        padding: $sectionPaddingTablet;
+    }
+
+    @media #{$mq-screen-mobile} {
+        padding: $sectionPaddingMobile;
+    }
+}
+
+@mixin link-underline-mixin($underlineDefault: true) {
+    text-decoration-thickness: 0.05em;
+    text-underline-offset: 0.1em;
+
+    @if $underlineDefault {
+        text-decoration-line: underline;
+    } @else {
+        text-decoration-line: none;
+    }
+
+    &:hover,
+    &:focus {
+        @if $underlineDefault {
+            text-decoration-line: none;
+        } @else {
+            text-decoration-line: underline;
+        }
+    }
+}
+
+// Fixes for content studio drag and drop placeholders
+@mixin content-studio-drop-zone-fix-local() {
+    :global(.xp-page-editor-region-placeholder:last-child) {
+        display: block;
+    }
+
+    :global(.xp-page-editor-part-placeholder) {
+        width: 100%;
+    }
+
+    :global(.live-edit-drag-placeholder-container) {
+        & > * {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@mixin content-studio-drop-zone-fix-global() {
+    .xp-page-editor-region-placeholder:last-child {
+        display: block;
+    }
+
+    .xp-page-editor-part-placeholder {
+        width: 100%;
+    }
+
+    .live-edit-drag-placeholder-container {
+        & > * {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@mixin unstyled-list() {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}

@@ -3,7 +3,7 @@ import { formatDate } from '../../utils/utils';
 import { Language, OpeningHours as OpeningHoursProps } from '../../utils/types';
 import { Table } from '@navikt/ds-react';
 
-// import styles from "./OpeningHours.module.scss";
+import styles from './OpeningHours.module.scss';
 
 type Props = {
     openingHours: OpeningHoursProps[];
@@ -64,9 +64,7 @@ export const OpeningHours = ({ openingHours, language }: Props) => {
 
     return (
         <Table>
-            <Table.Header
-            //   className={styles.srOnly}
-            >
+            <Table.Header className={styles.srOnly}>
                 <Table.Row>
                     <Table.HeaderCell scope="col">{dayLabel}</Table.HeaderCell>
                     <Table.HeaderCell scope="col">{timeLabel}</Table.HeaderCell>
