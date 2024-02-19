@@ -1,6 +1,7 @@
 {
-    "name": "nav-office-reception-info",
-    "version": "0.0.0",
+    "name": "@navikt/nav-office-reception-info",
+    "author": "NAVIKT",
+    "version": "0.1.0",
     "type": "module",
     "main": "dist/nav-office-reception-info.js",
     "types": "dist/main.d.ts",
@@ -16,6 +17,13 @@
         "prepublishOnly": "npm run build",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/navikt/nav-office-reception-info.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     },
     "peerDependencies": {
         "@navikt/ds-react": "^5.17.5",
