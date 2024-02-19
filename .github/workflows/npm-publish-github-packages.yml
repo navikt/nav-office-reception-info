@@ -1,8 +1,4 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
-name: Node.js Package
-
+name: Publish release (master only)
 on:
     workflow_dispatch:
         inputs:
@@ -21,28 +17,45 @@ on:
                 description: 'Release description'
 
 jobs:
-    build:
+    publish:
+        name: Publish to package registry
         runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: 16
-            - run: npm ci
-
-    publish-gpr:
-        needs: build
-        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
         permissions:
-            contents: read
+            contents: write
             packages: write
         steps:
-            - uses: actions/checkout@v3
-            - uses: actions/setup-node@v3
+            - name: Checkout branch
+              uses: actions/checkout@v2
+            - name: Setup node.js
+              uses: actions/setup-node@v2
               with:
-                  node-version: 16
-                  registry-url: https://npm.pkg.github.com/
-            - run: npm ci
-            - run: npm publish
+                  node-version: '16.15.0'
+                  registry-url: 'https://npm.pkg.github.com'
+                  cache: 'npm'
+            - name: Bump version
+              run: |
+                  git config --global user.name '${{ github.actor }}'
+                  git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+                  echo "VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }})" >> $GITHUB_ENV
+            - name: Install dependencies
+              run: npm ci
               env:
-                  NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN  }}
+            - name: Build package
+              run: npm run build
+            - name: Run tests
+              run: npm test
+            - name: Publish package
+              id: publish
+              run: npm publish
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Push new version tag
+              if: steps.publish.outcome == 'success'
+              run: git push
+            - name: Create release
+              uses: softprops/action-gh-release@v1
+              with:
+                  tag_name: ${{ env.VERSION_TAG }}
+                  body: ${{ github.event.inputs.releaseBody }}
