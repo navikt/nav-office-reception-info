@@ -26,7 +26,7 @@
         "registry": "https://npm.pkg.github.com"
     },
     "peerDependencies": {
-        "@navikt/ds-react": "^5.17.5",
+        "@navikt/ds-react": "^5.15.0",
         "dayjs": "^1.11.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
