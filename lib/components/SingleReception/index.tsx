@@ -23,8 +23,6 @@ export const SingleReception = (props: SingleReceptionProps) => {
     const { language } = props;
     const getLabel = translator('office', language);
 
-    console.log('language', language);
-
     const dagArr: string[] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'];
 
     const sortOpeningHours = (a: OpeningHoursProps, b: OpeningHoursProps) => {
