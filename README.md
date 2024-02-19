@@ -2,6 +2,8 @@ Satt opp Vite med ["library mode"](https://dev.to/receter/how-to-create-a-react-
 
 npm i && npm link ../nav-enonicxp-frontend/node_modules/react
 
+npm i && npm link ../personopplysninger/node_modules/react
+
 npm i
 npm link ../nav-enonicxp-frontend/node_modules/react //må kjøre den hver gang etter npm i?
 npm link ../nav-enonicxp-frontend/node_modules/sass ?
