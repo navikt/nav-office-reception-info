@@ -1,9 +1,10 @@
-import { Reception } from '../';
+// import { Reception } from '../';
 
-import reception from './reception.json';
+// import reception from './reception.json';
 
 function App() {
-    return <Reception receptions={reception} language="no" />;
+    // return <Reception receptions={reception} language="no" />;
+    return 'test';
 }
 
 export default App;
