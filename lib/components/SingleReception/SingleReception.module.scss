@@ -1,18 +1,28 @@
-@use '../common' as common;
+//Kopiert fra common.scss i nav-enonicxp-frontend
+$mobileMaxWidth: 48rem; // 768px
+$tabletMinWidth: $mobileMaxWidth;
+$tabletMaxWidth: 64rem; // 1024px
+$desktopMinWidth: $tabletMaxWidth;
+$mq-screen-mobile: 'only screen and (max-width: #{$mobileMaxWidth})';
+$mq-screen-tablet: 'only screen and (min-width: #{$tabletMinWidth}) and (max-width: #{$tabletMaxWidth})';
+$mq-screen-desktop: 'only screen and (min-width: #{$desktopMinWidth}) ';
+$sectionPaddingMobile: 1rem;
+$sectionPaddingTablet: 1.6rem;
+$sectionPaddingDesktop: 2.5rem;
 
 $metadataIndent: 34px;
 
 .singleReception {
     background-color: var(--a-deepblue-50);
     border-radius: var(--a-border-radius-small);
-    padding: common.$sectionPaddingMobile;
+    padding: $sectionPaddingMobile;
 
-    @media #{common.$mq-screen-tablet} {
-        padding: common.$sectionPaddingTablet;
+    @media #{$mq-screen-tablet} {
+        padding: $sectionPaddingTablet;
     }
 
-    @media #{common.$mq-screen-desktop} {
-        padding: common.$sectionPaddingDesktop;
+    @media #{$mq-screen-desktop} {
+        padding: $sectionPaddingDesktop;
     }
 
     table {
@@ -34,7 +44,7 @@ $metadataIndent: 34px;
             min-width: 9rem;
             font-weight: normal;
 
-            @media #{common.$mq-screen-mobile} {
+            @media #{$mq-screen-mobile} {
                 min-width: auto;
             }
         }
