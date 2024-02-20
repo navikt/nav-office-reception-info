@@ -12,11 +12,9 @@
         "**/*.css"
     ],
     "scripts": {
-        "dev": "vite",
         "build": "tsc --p ./tsconfig-build.json && vite build",
         "prepublishOnly": "npm run build",
-        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-        "preview": "vite preview"
+        "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
     },
     "repository": {
         "type": "git",
