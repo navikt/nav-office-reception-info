@@ -3,7 +3,7 @@ import { ClockFillIcon, InformationSquareFillIcon, HouseFillIcon } from '@navikt
 import { translator } from '../../utils/translations.ts';
 import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from '../../utils/types.ts';
 import { formatAddress } from '../../utils/utils.ts';
-import { OpeningHours } from '../OpeningHours';
+import { OpeningHours } from '../OpeningHours/OpeningHours.tsx';
 
 import styles from './SingleReception.module.scss';
 

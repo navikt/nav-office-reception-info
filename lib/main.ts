@@ -1,3 +1,3 @@
-export { Reception } from './components/Reception';
+export { Reception } from './components/Reception/Reception';
 export { formatAddress } from './utils/utils';
 export type { AudienceReception, LegacyOfficeAddress } from './utils/types';
