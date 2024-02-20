@@ -16,8 +16,8 @@
 
         /* Linting */
         "strict": false, //TODO sett true igjen?
-        "noUnusedLocals": true, //TODO sett true igjen?
-        "noUnusedParameters": true, //TODO sett true igjen?
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true
     },
     "include": ["lib"],
