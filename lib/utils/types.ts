@@ -33,7 +33,7 @@ export type OpeningHours = {
 export type AudienceReception = {
     stedsbeskrivelse?: string;
     aapningstider: OpeningHours[];
-    besoeksadresse?: Address;
+    besoeksadresse?: Address | LegacyOfficeAddress;
     adkomstbeskrivelse?: string;
 };
 
