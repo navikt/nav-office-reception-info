@@ -1,11 +1,14 @@
 Satt opp Vite med ["library mode"](https://dev.to/receter/how-to-create-a-react-component-library-using-vites-library-mode-4lma)
 
+npm link
 npm i && npm link ../nav-enonicxp-frontend/node_modules/react
-
 npm i && npm link ../personopplysninger/node_modules/react
 
 I konsument-app (nav-enonicxp-frontend, personopplysninger, etc.):
 npm link nav-office-reception-info
+
+I nav-office-reception-info
+npm run build
 
 # React + TypeScript + Vite
 

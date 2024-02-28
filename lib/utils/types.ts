@@ -35,6 +35,10 @@ export type AudienceReception = {
     aapningstider: OpeningHours[];
     besoeksadresse?: Address | LegacyOfficeAddress; //TODO sjekk om gir mening
     adkomstbeskrivelse?: string;
+    gateadresse?: string;
+    husnummer?: string;
+    postnummer?: string;
+    poststed?: string;
 };
 
 export type Language = 'no' | 'nn' | 'en';
