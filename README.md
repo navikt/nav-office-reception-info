@@ -4,9 +4,8 @@ npm i && npm link ../nav-enonicxp-frontend/node_modules/react
 
 npm i && npm link ../personopplysninger/node_modules/react
 
-npm i
-npm link ../nav-enonicxp-frontend/node_modules/react //må kjøre den hver gang etter npm i?
-npm link ../nav-enonicxp-frontend/node_modules/sass ?
+I konsument-app (nav-enonicxp-frontend, personopplysninger, etc.):
+npm link nav-office-reception-info
 
 # React + TypeScript + Vite
 
