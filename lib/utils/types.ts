@@ -9,17 +9,6 @@ export type Address = {
     poststed?: string;
 };
 
-export type LegacyOfficeAddress = {
-    gatenavn: string;
-    husbokstav?: string;
-    husnummer: string;
-    postboksanlegg?: string;
-    postboksnummer?: string;
-    postnummer: string;
-    poststed: string;
-    type: string;
-};
-
 export type OpeningHours = {
     dag?: 'Mandag' | 'Tirsdag' | 'Onsdag' | 'Torsdag' | 'Fredag';
     dato?: string;
@@ -33,7 +22,7 @@ export type OpeningHours = {
 export type AudienceReception = {
     stedsbeskrivelse?: string;
     aapningstider: OpeningHours[];
-    besoeksadresse?: Address | LegacyOfficeAddress; //TODO sjekk om gir mening
+    besoeksadresse?: Address;
     adkomstbeskrivelse?: string;
     gateadresse?: string;
     husnummer?: string;
