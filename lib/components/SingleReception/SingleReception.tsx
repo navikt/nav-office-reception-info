@@ -12,7 +12,6 @@ interface FormattedAudienceReception {
     adkomstbeskrivelse: string;
     openingHours: OpeningHoursProps[];
     openingHoursExceptions: OpeningHoursProps[];
-    place: string;
 }
 
 interface SingleReceptionProps extends AudienceReception {
@@ -51,7 +50,6 @@ export const SingleReception = (props: SingleReceptionProps) => {
 
         return {
             address: formatAddress(audienceReception.besoeksadresse, true),
-            place: audienceReception.stedsbeskrivelse || audienceReception.besoeksadresse.poststed,
             openingHoursExceptions: aapningstider.exceptions,
             openingHours: aapningstider.regular.sort(sortOpeningHours),
             adkomstbeskrivelse: audienceReception.adkomstbeskrivelse,
