@@ -1,7 +1,7 @@
-import { Address, LegacyOfficeAddress } from './types';
+import { Address } from './types';
 import dayjs from 'dayjs';
 
-export const formatAddress = (address?: Address | LegacyOfficeAddress, withZip?: boolean) => {
+export const formatAddress = (address?: Address, withZip?: boolean) => {
     if (!address) {
         return '';
     }
