@@ -24,7 +24,7 @@
         "registry": "https://npm.pkg.github.com"
     },
     "peerDependencies": {
-        "@navikt/aksel-icons": "^5.15.0",
+        "@navikt/aksel-icons": "^5.11.3",
         "@navikt/ds-css": "^5.15.0",
         "@navikt/ds-react": "^5.15.0",
         "dayjs": "^1.11.10",
