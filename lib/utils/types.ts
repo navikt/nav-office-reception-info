@@ -24,10 +24,6 @@ export type AudienceReception = {
     aapningstider: OpeningHours[];
     besoeksadresse?: Address;
     adkomstbeskrivelse?: string;
-    gateadresse?: string;
-    husnummer?: string;
-    postnummer?: string;
-    poststed?: string;
 };
 
 export type Language = 'no' | 'nn' | 'en';

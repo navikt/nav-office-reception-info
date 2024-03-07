@@ -24,7 +24,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
         if (!reception) {
             return '(Ukjent sted)';
         }
-        return reception.stedsbeskrivelse || reception.besoeksadresse?.poststed || reception.poststed || '(Ukjent sted)'; //TODO endret
+        return reception.stedsbeskrivelse || reception.besoeksadresse.poststed || '(Ukjent sted)';
     };
 
     const getIdFromLabel = (label: string) => {
