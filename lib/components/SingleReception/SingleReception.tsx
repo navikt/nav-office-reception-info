@@ -56,13 +56,9 @@ export const SingleReception = (props: SingleReceptionProps) => {
         };
     };
 
-    const formattedAudienceReception = formatAudienceReception(props);
-    const { adkomstbeskrivelse, openingHours, openingHoursExceptions } = formattedAudienceReception;
+    const { address, adkomstbeskrivelse, openingHours } = formatAudienceReception(props);
 
-    let { address } = formattedAudienceReception;
-    if (!address) {
-        address = `${props.gateadresse} ${props.husnummer}, ${props.postnummer} ${props.poststed}`;
-    }
+    let { openingHoursExceptions } = formatAudienceReception(props);
 
     const todaysDate: string = new Date().toISOString().slice(0, 10);
     const futureOpeningHoursExceptions = openingHoursExceptions
