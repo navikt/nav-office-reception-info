@@ -56,9 +56,7 @@ export const SingleReception = (props: SingleReceptionProps) => {
         };
     };
 
-    const { address, adkomstbeskrivelse, openingHours } = formatAudienceReception(props);
-
-    let { openingHoursExceptions } = formatAudienceReception(props);
+    const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions } = formatAudienceReception(props);
 
     const todaysDate: string = new Date().toISOString().slice(0, 10);
     const futureOpeningHoursExceptions = openingHoursExceptions
