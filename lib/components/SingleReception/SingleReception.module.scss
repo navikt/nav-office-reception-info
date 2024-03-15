@@ -92,8 +92,8 @@ $metadataIndent: 34px;
 }
 
 .addressLine {
-    margin-left: $metadataIndent;
-    margin-bottom: 1rem;
+    margin-left: $metadataIndent !important; //quick-fix, disse overstyres av .navds-body-short i personopplysninger
+    margin-bottom: 1rem !important;
 }
 
 .appointmentBookingInfo {
