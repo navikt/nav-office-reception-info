@@ -6,6 +6,11 @@ Pakke for å vise informasjon om publikumsmottak. Satt opp med Vite i ["library 
 
 ## Lokal utvikling:
 
+```
+npm i
+npm link
+```
+
 ### For testing i nav-enonicxp-frontend:
 
 ```
@@ -18,13 +23,14 @@ npm link ../nav-enonicxp-frontend/node_modules/react
 npm link ../personopplysninger/node_modules/react
 ```
 
-(npm link må kjøres på ny hver gang etter npm install)
+(npm link ../konsument-app/node_modules/react må kjøres på ny hver gang etter npm install)
 
 ```
 npm run build
 ```
 
 ### I konsument-app (nav-enonicxp-frontend, personopplysninger, etc.):
+
 ```
 npm link nav-office-reception-info
 ```
@@ -36,7 +42,3 @@ Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/
 ### For NAV-ansatte
 
 Interne henvendelser kan sendes via Slack i kanalen #team-personbruker
-
-
-
-
