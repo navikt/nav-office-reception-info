@@ -4,6 +4,7 @@ import { translator } from '../../utils/translations.ts';
 import { AudienceReception, Language } from '../../utils/types.ts';
 import { OpeningHours } from '../OpeningHours/OpeningHours.tsx';
 import { formatAudienceReception } from './formatAudienceReception.ts';
+import { getFutureOpeningExceptions } from './futureOpeningHoursExceptions.ts';
 
 import style from './SingleReception.module.scss';
 
@@ -16,18 +17,7 @@ export const SingleReception = (props: SingleReceptionProps) => {
     const getLabel = translator('office', language);
 
     const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions } = formatAudienceReception(props);
-
-    const todaysDate: string = new Date().toISOString().slice(0, 10);
-    const futureOpeningHoursExceptions = openingHoursExceptions
-        .filter((exception) => {
-            const openingHoursExceptionDate: string = exception.dato;
-            return openingHoursExceptionDate >= todaysDate;
-        })
-        .sort((a, b) => {
-            const dateA = new Date(a.dato).getTime();
-            const dateB = new Date(b.dato).getTime();
-            return dateA - dateB;
-        });
+    const futureOpeningHoursExceptions = getFutureOpeningExceptions(openingHoursExceptions);
 
     return (
         <div className={style.singleReception}>
