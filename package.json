@@ -1,7 +1,7 @@
 {
     "name": "@navikt/nav-office-reception-info",
     "author": "NAVIKT",
-    "version": "0.4.3",
+    "version": "0.4.4",
     "type": "module",
     "main": "dist/nav-office-reception-info.js",
     "types": "dist/main.d.ts",
