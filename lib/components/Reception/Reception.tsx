@@ -4,18 +4,18 @@ import { AudienceReception } from '../../utils/types.ts';
 import { SingleReception } from '../SingleReception/SingleReception.tsx';
 import { translator } from '../../utils/translations.ts';
 
-import styles from './Reception.module.scss';
+import style from './Reception.module.scss';
 
-interface LocationsProps {
+type Props = {
     receptions: AudienceReception[];
     language: string;
-}
+};
 
 const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
     return ['no', 'nn', 'en'].includes(lang) ? (lang as 'no' | 'nn' | 'en') : 'no';
 };
 
-export const Reception = ({ receptions, language }: LocationsProps) => {
+export const Reception = ({ receptions, language }: Props) => {
     console.log('receptions', receptions);
     const languageValidated = validateLanguage(language);
 
@@ -25,7 +25,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
         if (!reception) {
             return '(Ukjent sted)';
         }
-        return reception.stedsbeskrivelse || reception.besoeksadresse.poststed || '(Ukjent sted)';
+        reception.stedsbeskrivelse || reception.besoeksadresse?.poststed || '(Ukjent sted)';
     };
 
     const getIdFromLabel = (label: string) => {
@@ -41,7 +41,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
 
     if (receptions.length === 1) {
         return (
-            <div className={styles.singleTab}>
+            <div className={style.singleTab}>
                 <SingleReception {...receptions[0]} language={languageValidated} />
             </div>
         );
@@ -49,8 +49,8 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
 
     return (
         <>
-            <BodyLong className={styles.chooseBetweenOffices}>{getOfficeTranslations('chooseBetweenOffices')}</BodyLong>
-            <Tabs value={state} onChange={setState} className={styles.officeTabs}>
+            <BodyLong className={style.chooseBetweenOffices}>{getOfficeTranslations('chooseBetweenOffices')}</BodyLong>
+            <Tabs value={state} onChange={setState} className={style.officeTabs}>
                 <Tabs.List>
                     {receptions.map((loc: AudienceReception, index) => {
                         const locationLabel = getLocation(loc);
@@ -60,7 +60,7 @@ export const Reception = ({ receptions, language }: LocationsProps) => {
                 {receptions.map((loc: AudienceReception, index) => {
                     const locationLabel = getLocation(loc);
                     return (
-                        <Tabs.Panel key={index} value={getIdFromLabel(locationLabel)} className={styles.singleTab}>
+                        <Tabs.Panel key={index} value={getIdFromLabel(locationLabel)} className={style.singleTab}>
                             <SingleReception {...loc} language={languageValidated} />
                         </Tabs.Panel>
                     );
