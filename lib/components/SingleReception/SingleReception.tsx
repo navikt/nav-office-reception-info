@@ -1,57 +1,19 @@
 import { BodyShort, Heading } from '@navikt/ds-react';
 import { ClockFillIcon, InformationSquareFillIcon, HouseFillIcon } from '@navikt/aksel-icons';
 import { translator } from '../../utils/translations.ts';
-import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from '../../utils/types.ts';
-import { formatAddress } from '../../utils/utils.ts';
+import { AudienceReception, Language } from '../../utils/types.ts';
 import { OpeningHours } from '../OpeningHours/OpeningHours.tsx';
+import { formatAudienceReception } from './formatAudienceReception.ts';
 
 import style from './SingleReception.module.scss';
-
-interface FormattedAudienceReception {
-    address: string;
-    adkomstbeskrivelse: string;
-    openingHours: OpeningHoursProps[];
-    openingHoursExceptions: OpeningHoursProps[];
-}
 
 interface SingleReceptionProps extends AudienceReception {
     language: Language;
 }
 
-type OpeningHoursBuckets = {
-    regular: OpeningHoursProps[];
-    exceptions: OpeningHoursProps[];
-};
-
 export const SingleReception = (props: SingleReceptionProps) => {
     const { language } = props;
     const getLabel = translator('office', language);
-
-    const dagArr: string[] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'];
-
-    const formatAudienceReception = (audienceReception: AudienceReception): FormattedAudienceReception => {
-        const aapningstider = audienceReception.aapningstider.reduce<OpeningHoursBuckets>(
-            (acc, elem) => {
-                if (elem.dato) {
-                    acc.exceptions.push(elem);
-                } else {
-                    acc.regular.push(elem);
-                }
-                return acc;
-            },
-            {
-                regular: [],
-                exceptions: [],
-            }
-        );
-
-        return {
-            address: formatAddress(audienceReception.besoeksadresse, true),
-            openingHoursExceptions: aapningstider.exceptions,
-            openingHours: aapningstider.regular.sort((a, b) => dagArr.indexOf(a.dag) - dagArr.indexOf(b.dag)),
-            adkomstbeskrivelse: audienceReception.adkomstbeskrivelse,
-        };
-    };
 
     const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions } = formatAudienceReception(props);
 
