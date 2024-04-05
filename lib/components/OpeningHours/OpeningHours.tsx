@@ -21,7 +21,7 @@ export const OpeningHours = ({ openingHours, language }: Props) => {
 
     const weekdayNames = getDateTimeTranslations('weekDayNames');
 
-    const dagArr: string[] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'];
+    const dagArr: OpeningHoursProps['dag'][] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'] as const;
 
     const weekDayTranslation = dagArr.reduce((acc, elem, index) => {
         acc[elem] = weekdayNames[index];
