@@ -16,9 +16,7 @@ const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
 };
 
 export const Reception = ({ receptions, language }: Props) => {
-    console.log('receptions', receptions);
     const languageValidated = validateLanguage(language);
-
     const getOfficeTranslations = translator('office', languageValidated);
 
     const getLocation = (reception: AudienceReception) => {
