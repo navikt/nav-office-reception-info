@@ -25,7 +25,7 @@ export const Reception = ({ receptions, language }: Props) => {
         if (!reception) {
             return '(Ukjent sted)';
         }
-        reception.stedsbeskrivelse || reception.besoeksadresse?.poststed || '(Ukjent sted)';
+        return reception.stedsbeskrivelse || reception.besoeksadresse?.poststed || '(Ukjent sted)';
     };
 
     const getIdFromLabel = (label: string) => {
