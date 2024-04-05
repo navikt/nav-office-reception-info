@@ -5,7 +5,7 @@ import { AudienceReception, Language, OpeningHours as OpeningHoursProps } from '
 import { formatAddress } from '../../utils/utils.ts';
 import { OpeningHours } from '../OpeningHours/OpeningHours.tsx';
 
-import styles from './SingleReception.module.scss';
+import style from './SingleReception.module.scss';
 
 interface FormattedAudienceReception {
     address: string;
@@ -18,22 +18,19 @@ interface SingleReceptionProps extends AudienceReception {
     language: Language;
 }
 
+type OpeningHoursBuckets = {
+    regular: OpeningHoursProps[];
+    exceptions: OpeningHoursProps[];
+};
+
 export const SingleReception = (props: SingleReceptionProps) => {
     const { language } = props;
     const getLabel = translator('office', language);
 
     const dagArr: string[] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'];
 
-    const sortOpeningHours = (a: OpeningHoursProps, b: OpeningHoursProps) => {
-        return dagArr.indexOf(a.dag) - dagArr.indexOf(b.dag);
-    };
-
-    const formatAudienceReception = (audienceReception: AudienceReception): FormattedAudienceReception | null => {
-        if (!audienceReception) {
-            return null;
-        }
-
-        const aapningstider = audienceReception.aapningstider.reduce(
+    const formatAudienceReception = (audienceReception: AudienceReception): FormattedAudienceReception => {
+        const aapningstider = audienceReception.aapningstider.reduce<OpeningHoursBuckets>(
             (acc, elem) => {
                 if (elem.dato) {
                     acc.exceptions.push(elem);
@@ -51,7 +48,7 @@ export const SingleReception = (props: SingleReceptionProps) => {
         return {
             address: formatAddress(audienceReception.besoeksadresse, true),
             openingHoursExceptions: aapningstider.exceptions,
-            openingHours: aapningstider.regular.sort(sortOpeningHours),
+            openingHours: aapningstider.regular.sort((a, b) => dagArr.indexOf(a.dag) - dagArr.indexOf(b.dag)),
             adkomstbeskrivelse: audienceReception.adkomstbeskrivelse,
         };
     };
@@ -71,22 +68,22 @@ export const SingleReception = (props: SingleReceptionProps) => {
         });
 
     return (
-        <div className={styles.singleReception}>
-            <Heading level="3" size="medium" spacing className={styles.heading}>
-                <HouseFillIcon aria-hidden="true" className={`${styles.headingIcon} ${styles.iconPlace}`} />
+        <div className={style.singleReception}>
+            <Heading level="3" size="medium" spacing className={style.heading}>
+                <HouseFillIcon aria-hidden="true" className={`${style.headingIcon} ${style.iconPlace}`} />
                 {getLabel('address')}
             </Heading>
-            <section className={styles.address}>
-                <BodyShort className={styles.addressLine}>{address}</BodyShort>
-                <BodyShort className={styles.addressLine} size="small">
+            <section className={style.address}>
+                <BodyShort className={style.addressLine}>{address}</BodyShort>
+                <BodyShort className={style.addressLine} size="small">
                     {adkomstbeskrivelse}
                 </BodyShort>
             </section>
 
             {openingHours.length > 0 && (
                 <>
-                    <Heading level="3" size="medium" spacing className={styles.heading}>
-                        <ClockFillIcon aria-hidden="true" className={`${styles.headingIcon} ${styles.iconClock}`} />
+                    <Heading level="3" size="medium" spacing className={style.heading}>
+                        <ClockFillIcon aria-hidden="true" className={`${style.headingIcon} ${style.iconClock}`} />
                         {getLabel('openingHoursWithoutAppointment')}
                     </Heading>
                     <OpeningHours openingHours={openingHours} language={language} />
@@ -100,8 +97,8 @@ export const SingleReception = (props: SingleReceptionProps) => {
                     <OpeningHours openingHours={futureOpeningHoursExceptions} language={language} />
                 </>
             )}
-            <div className={styles.appointmentBookingInfo}>
-                <InformationSquareFillIcon className={styles.iconInfo} aria-hidden="true" />
+            <div className={style.appointmentBookingInfo}>
+                <InformationSquareFillIcon className={style.iconInfo} aria-hidden="true" />
                 {getLabel('youCanMakeAppointment')}
             </div>
         </div>
