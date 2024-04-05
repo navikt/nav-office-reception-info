@@ -11,7 +11,15 @@ export const translationsBundleEn: PartialTranslations = {
         youCanMakeAppointment: 'You can book a meeting with your advisor outside of these opening hours.',
     },
     dateTime: {
-        weekDayNames: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        weekDayNames: {
+            mon: 'Monday',
+            tue: 'Tuesday',
+            wed: 'Wednesday',
+            thu: 'Thursday',
+            fri: 'Friday',
+            sat: 'Saturday',
+            sun: 'Sunday',
+        },
         time: 'time',
         day: 'day',
     },

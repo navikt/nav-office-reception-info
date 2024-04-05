@@ -11,7 +11,15 @@ export const translationsBundleNn: PartialTranslations = {
         youCanMakeAppointment: 'Du kan avtale møte med rettleiaren din utanom desse opningstidene.',
     },
     dateTime: {
-        weekDayNames: ['Måndag', 'Tysdag', 'Onsdag', 'Torsdag', 'Fredag', 'Laurdag', 'Søndag'],
+        weekDayNames: {
+            mon: 'Måndag',
+            tue: 'Tysdag',
+            wed: 'Onsdag',
+            thu: 'Torsdag',
+            fri: 'Fredag',
+            sat: 'Laurdag',
+            sun: 'Søndag',
+        },
         time: 'tid',
         day: 'dag',
     },

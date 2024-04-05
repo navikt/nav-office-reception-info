@@ -13,7 +13,15 @@ export const translationsBundleNb = {
         youCanMakeAppointment: 'Du kan avtale møte med veilederen din utenom disse åpningstidene.',
     },
     dateTime: {
-        weekDayNames: ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag', 'Søndag'],
+        weekDayNames: {
+            mon: 'Mandag',
+            tue: 'Tirsdag',
+            wed: 'Onsdag',
+            thu: 'Torsdag',
+            fri: 'Fredag',
+            sat: 'Lørdag',
+            sun: 'Søndag',
+        },
         time: 'tid',
         day: 'dag',
     },

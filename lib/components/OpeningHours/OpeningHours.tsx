@@ -1,7 +1,7 @@
 import { translator } from '../../utils/translations';
-import { formatDate } from '../../utils/utils';
 import { Language, OpeningHours as OpeningHoursProps } from '../../utils/types';
 import { Table } from '@navikt/ds-react';
+import { buildDayLabel } from './buildDayLabel';
 
 import styles from './OpeningHours.module.scss';
 
@@ -18,30 +18,6 @@ export const OpeningHours = ({ openingHours, language }: Props) => {
     const appointmentOnlyLabel = getOfficeTranslations('appointmentOnly');
     const dayLabel = getDateTimeTranslations('day');
     const timeLabel = getDateTimeTranslations('time');
-
-    const weekdayNames = getDateTimeTranslations('weekDayNames');
-
-    const dagArr: OpeningHoursProps['dag'][] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'] as const;
-
-    const weekDayTranslation = dagArr.reduce((acc, elem, index) => {
-        acc[elem] = weekdayNames[index];
-        return acc;
-    }, {});
-
-    // If includes dato, show this rather than day (for special opening hours)
-    const buildDayLabel = (opening: OpeningHoursProps): string => {
-        const { dato, dag } = opening;
-        if (dato) {
-            return formatDate({
-                datetime: dato,
-                language,
-                short: true,
-                year: true,
-            });
-        }
-
-        return weekDayTranslation[dag] || ''; // Fallback to empty string to avoid showing "undefined"
-    };
 
     const normalizeTimeLabel = (time: string): string => {
         if (!time) {
@@ -72,7 +48,7 @@ export const OpeningHours = ({ openingHours, language }: Props) => {
             </Table.Header>
             <Table.Body>
                 {openingHours.map((opening, index) => {
-                    const dayInformation = buildDayLabel(opening);
+                    const dayInformation = buildDayLabel(opening, language);
 
                     return (
                         <Table.Row shadeOnHover={false} key={index}>
