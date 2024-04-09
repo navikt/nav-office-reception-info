@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import { BodyLong, Tabs } from '@navikt/ds-react';
 import { AudienceReception } from '../../utils/types.ts';
 import { SingleReception } from '../SingleReception/SingleReception.tsx';
 import { translator } from '../../utils/translations.ts';
 
 import style from './Reception.module.scss';
-import { ClockDashedIcon, InboxDownIcon, PaperplaneIcon } from '@navikt/aksel-icons';
 
 type Props = {
     receptions: AudienceReception[];
@@ -18,6 +18,20 @@ const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
 export const Reception = ({ receptions, language }: Props) => {
     const languageValidated = validateLanguage(language);
     const getOfficeTranslations = translator('office', languageValidated);
+
+    const getLocation = (reception: AudienceReception) => {
+        if (!reception) {
+            return '(Ukjent sted)';
+        }
+        return reception.stedsbeskrivelse || reception.besoeksadresse?.poststed || '(Ukjent sted)';
+    };
+
+    const getIdFromLabel = (label: string) => {
+        return label.replace(/\s/g, '-').toLowerCase();
+    };
+
+    const firstLocation = getLocation(receptions[0]);
+    const [state, setState] = useState(getIdFromLabel(firstLocation));
 
     if (!receptions || receptions.length === 0) {
         return null;
@@ -34,21 +48,21 @@ export const Reception = ({ receptions, language }: Props) => {
     return (
         <>
             <BodyLong className={style.chooseBetweenOffices}>{getOfficeTranslations('chooseBetweenOffices')}</BodyLong>
-            <Tabs defaultValue="logg">
+            <Tabs value={state} onChange={setState} className={style.officeTabs}>
                 <Tabs.List>
-                    <Tabs.Tab value="logg" label="Logg" icon={<ClockDashedIcon title="historielogg" />} />
-                    <Tabs.Tab value="inbox" label="Inbox" icon={<InboxDownIcon title="inbox" />} />
-                    <Tabs.Tab value="sendt" label="Sendt" icon={<PaperplaneIcon title="sendt" />} />
+                    {receptions.map((loc: AudienceReception, index) => {
+                        const locationLabel = getLocation(loc);
+                        return <Tabs.Tab key={index} value={getIdFromLabel(locationLabel)} label={locationLabel} />;
+                    })}
                 </Tabs.List>
-                <Tabs.Panel value="logg" className="h-24 w-full bg-gray-50 p-4">
-                    Logg-tab
-                </Tabs.Panel>
-                <Tabs.Panel value="inbox" className="h-24 w-full bg-gray-50 p-4">
-                    Inbox-tab
-                </Tabs.Panel>
-                <Tabs.Panel value="sendt" className="h-24  w-full bg-gray-50 p-4">
-                    Sendt-tab
-                </Tabs.Panel>
+                {receptions.map((loc: AudienceReception, index) => {
+                    const locationLabel = getLocation(loc);
+                    return (
+                        <Tabs.Panel key={index} value={getIdFromLabel(locationLabel)} className={style.singleTab}>
+                            <SingleReception {...loc} language={languageValidated} />
+                        </Tabs.Panel>
+                    );
+                })}
             </Tabs>
         </>
     );
