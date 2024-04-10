@@ -9,7 +9,7 @@ import style from './Reception.module.scss';
 type Props = {
     receptions: AudienceReception[];
     language: string;
-    officeType: string;
+    officeType?: string;
 };
 
 const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
