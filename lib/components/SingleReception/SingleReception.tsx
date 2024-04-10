@@ -19,6 +19,9 @@ export const SingleReception = (props: SingleReceptionProps) => {
     const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions } = formatAudienceReception(props);
     const futureOpeningHoursExceptions = getFutureOpeningExceptions(openingHoursExceptions);
 
+    const hasOpeningHours = openingHours.length > 0 || futureOpeningHoursExceptions.length > 0;
+    const openingHoursHeading = props.officeType === 'HMS' ? getLabel('openingHours') : getLabel('openingHoursWithoutAppointment');
+
     return (
         <div className={style.singleReception}>
             <Heading level="3" size="medium" spacing className={style.heading}>
@@ -27,16 +30,18 @@ export const SingleReception = (props: SingleReceptionProps) => {
             </Heading>
             <section className={style.address}>
                 <BodyShort className={style.addressLine}>{address}</BodyShort>
-                <BodyShort className={style.addressLine} size="small">
-                    {adkomstbeskrivelse}
-                </BodyShort>
+                {adkomstbeskrivelse && (
+                    <BodyShort className={style.addressLine} size="small">
+                        {adkomstbeskrivelse}
+                    </BodyShort>
+                )}
             </section>
 
             {openingHours.length > 0 && (
                 <>
                     <Heading level="3" size="medium" spacing className={style.heading}>
                         <ClockFillIcon aria-hidden="true" className={`${style.headingIcon} ${style.iconClock}`} />
-                        {getLabel('openingHoursWithoutAppointment')}
+                        {openingHoursHeading}
                     </Heading>
                     <OpeningHours openingHours={openingHours} language={language} />
                 </>
@@ -49,10 +54,12 @@ export const SingleReception = (props: SingleReceptionProps) => {
                     <OpeningHours openingHours={futureOpeningHoursExceptions} language={language} />
                 </>
             )}
-            <div className={style.appointmentBookingInfo}>
-                <InformationSquareFillIcon className={style.iconInfo} aria-hidden="true" />
-                {getLabel('youCanMakeAppointment')}
-            </div>
+            {hasOpeningHours && props.officeType !== 'HMS' && (
+                <div className={style.appointmentBookingInfo}>
+                    <InformationSquareFillIcon className={style.iconInfo} aria-hidden="true" />
+                    {getLabel('youCanMakeAppointment')}
+                </div>
+            )}
         </div>
     );
 };

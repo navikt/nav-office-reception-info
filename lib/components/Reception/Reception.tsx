@@ -9,13 +9,14 @@ import style from './Reception.module.scss';
 type Props = {
     receptions: AudienceReception[];
     language: string;
+    officeType: string;
 };
 
 const validateLanguage = (lang: string): 'no' | 'nn' | 'en' => {
     return ['no', 'nn', 'en'].includes(lang) ? (lang as 'no' | 'nn' | 'en') : 'no';
 };
 
-export const Reception = ({ receptions, language }: Props) => {
+export const Reception = ({ receptions, language, officeType }: Props) => {
     const languageValidated = validateLanguage(language);
     const getOfficeTranslations = translator('office', languageValidated);
 
@@ -40,7 +41,7 @@ export const Reception = ({ receptions, language }: Props) => {
     if (receptions.length === 1) {
         return (
             <div className={style.singleTab}>
-                <SingleReception {...receptions[0]} language={languageValidated} />
+                <SingleReception {...receptions[0]} language={languageValidated} officeType={officeType} />
             </div>
         );
     }
