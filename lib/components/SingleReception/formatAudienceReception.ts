@@ -8,7 +8,7 @@ type OpeningHoursBuckets = {
 
 type FormattedAudienceReception = {
     address: string;
-    adkomstbeskrivelse: string; // TODO optional lagt til i xp-frontend? Eller var den optional før og så endra jeg det?
+    adkomstbeskrivelse?: string;
     openingHours: OpeningHoursProps[];
     openingHoursExceptions: OpeningHoursProps[];
 };
