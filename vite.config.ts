@@ -5,10 +5,10 @@ import dts from 'vite-plugin-dts';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), dts({ include: ['lib'] })],
+    plugins: [react(), dts({ include: ['src'] })],
     build: {
         lib: {
-            entry: resolve(__dirname, 'lib/main.ts'),
+            entry: resolve(__dirname, 'src/main.ts'),
             formats: ['es'],
         },
         rollupOptions: {
