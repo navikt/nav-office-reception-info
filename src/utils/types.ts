@@ -1,12 +1,10 @@
 export type Address = {
-    type?: 'stedsadresse' | 'postboksadresse';
-    gatenavn?: string;
-    husbokstav?: string;
-    husnummer?: string;
-    postboksanlegg?: string;
-    postboksnummer?: string;
+    type?: 'stedsadresse';
     postnummer?: string;
     poststed?: string;
+    gatenavn?: string;
+    husnummer?: string;
+    husbokstav?: string;
 };
 
 export type OpeningHours = {
@@ -14,9 +12,9 @@ export type OpeningHours = {
     dato?: string;
     fra?: string;
     til?: string;
-    kunTimeavtale?: string;
     kommentar?: string;
     stengt?: string;
+    kunTimeavtale?: string;
 };
 
 export type AudienceReception = {

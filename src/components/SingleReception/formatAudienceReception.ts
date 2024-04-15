@@ -35,7 +35,7 @@ export const formatAudienceReception = (audienceReception: AudienceReception): F
     openingHours?.sort((a, b) => dagArr.indexOf(a.dag) - dagArr.indexOf(b.dag));
 
     return {
-        address: formatAddress(audienceReception.besoeksadresse, true),
+        address: formatAddress(audienceReception.besoeksadresse),
         openingHoursExceptions: aapningstider?.exceptions || [],
         openingHours,
         adkomstbeskrivelse: audienceReception.adkomstbeskrivelse,
