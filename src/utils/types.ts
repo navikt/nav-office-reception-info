@@ -1,6 +1,7 @@
 export type Address = {
     type?: 'stedsadresse';
     postnummer?: string;
+    adresseTilleggsnavn?: string;
     poststed?: string;
     gatenavn?: string;
     husnummer?: string;

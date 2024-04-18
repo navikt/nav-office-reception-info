@@ -16,7 +16,7 @@ export const SingleReception = (props: SingleReceptionProps) => {
     const { language } = props;
     const getLabel = translator('office', language);
 
-    const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions } = formatAudienceReception(props);
+    const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions, addressExtra } = formatAudienceReception(props);
     const futureOpeningHoursExceptions = getFutureOpeningExceptions(openingHoursExceptions);
 
     const hasOpeningHours = openingHours.length > 0 || futureOpeningHoursExceptions.length > 0;
@@ -29,6 +29,7 @@ export const SingleReception = (props: SingleReceptionProps) => {
                 {getLabel('address')}
             </Heading>
             <section className={style.address}>
+                {addressExtra && <BodyShort className={style.addressExtra}>{addressExtra}</BodyShort>}
                 <BodyShort className={style.addressLine}>{address}</BodyShort>
                 {adkomstbeskrivelse && (
                     <BodyShort className={style.addressLine} size="small">

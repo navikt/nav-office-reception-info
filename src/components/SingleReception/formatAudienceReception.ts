@@ -9,6 +9,7 @@ type OpeningHoursBuckets = {
 type FormattedAudienceReception = {
     address: string;
     adkomstbeskrivelse?: string;
+    addressExtra?: string;
     openingHours: OpeningHoursProps[];
     openingHoursExceptions: OpeningHoursProps[];
 };
@@ -36,6 +37,7 @@ export const formatAudienceReception = (audienceReception: AudienceReception): F
 
     return {
         address: formatAddress(audienceReception.besoeksadresse),
+        addressExtra: audienceReception.besoeksadresse?.adresseTilleggsnavn,
         openingHoursExceptions: aapningstider?.exceptions || [],
         openingHours,
         adkomstbeskrivelse: audienceReception.adkomstbeskrivelse,
