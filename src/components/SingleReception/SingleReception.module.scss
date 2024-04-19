@@ -103,6 +103,11 @@ $metadataIndent: 34px;
     }
 }
 
+.addressExtra {
+    @extend .addressLine;
+    margin-bottom: 0;
+}
+
 .appointmentBookingInfo {
     display: flex;
     gap: 0.375rem;
