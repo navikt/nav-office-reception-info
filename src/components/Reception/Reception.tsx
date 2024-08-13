@@ -60,7 +60,7 @@ export const Reception = ({ receptions, language, officeType }: Props) => {
                     const locationLabel = getLocation(loc);
                     return (
                         <Tabs.Panel key={index} value={getIdFromLabel(locationLabel)} className={style.singleTab}>
-                            <SingleReception {...loc} language={languageValidated} />
+                            <SingleReception {...loc} language={languageValidated} officeType={officeType} />
                         </Tabs.Panel>
                     );
                 })}
