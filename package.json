@@ -33,7 +33,8 @@
     },
     "comment": {
         "dependencies": {
-            "typescript": "26.09.24: @typescript-eslint/typescript-estree only support 5.5.4. Check before upgrading"
+            "typescript": "26.09.24: @typescript-eslint/typescript-estree only support 5.5.4. Check before upgrading",
+            "eslint-plugin-react-hooks": "30.09.24: eslint-plugin-react-hooks does not support eslint9. Use the release candidate."
         }
     },
     "devDependencies": {
