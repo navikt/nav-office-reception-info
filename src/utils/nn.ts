@@ -8,7 +8,7 @@ export const translationsBundleNn: PartialTranslations = {
         openingHours: 'Opningstider',
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Spesielle åpningstider',
-        address: 'Adresse',
+        address: 'Besøksadresse',
     },
     dateTime: {
         weekDayNames: {
