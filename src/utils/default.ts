@@ -10,7 +10,7 @@ export const translationsBundleNb = {
         openingHours: 'Åpningstider',
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Spesielle åpningstider',
-        address: 'Adresse',
+        address: 'Besøksadresse',
     },
     dateTime: {
         weekDayNames: {
