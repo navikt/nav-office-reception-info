@@ -9,7 +9,6 @@ export const translationsBundleEn: PartialTranslations = {
         appointmentOnly: 'Kun timeavtale',
         specialOpeningHours: 'Special opening hours',
         address: 'Address',
-        youCanMakeAppointment: 'You can book a meeting with your advisor outside of these opening hours.',
     },
     dateTime: {
         weekDayNames: {

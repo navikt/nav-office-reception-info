@@ -1,5 +1,5 @@
 import { BodyShort, Heading } from '@navikt/ds-react';
-import { ClockFillIcon, InformationSquareFillIcon, HouseFillIcon } from '@navikt/aksel-icons';
+import { ClockFillIcon, HouseFillIcon } from '@navikt/aksel-icons';
 import { translator } from '../../utils/translations.ts';
 import { AudienceReception, Language } from '../../utils/types.ts';
 import { OpeningHours } from '../OpeningHours/OpeningHours.tsx';
@@ -19,7 +19,6 @@ export const SingleReception = (props: SingleReceptionProps) => {
     const { address, adkomstbeskrivelse, openingHours, openingHoursExceptions, addressExtra } = formatAudienceReception(props);
     const futureOpeningHoursExceptions = getFutureOpeningExceptions(openingHoursExceptions);
 
-    const hasOpeningHours = openingHours.length > 0 || futureOpeningHoursExceptions.length > 0;
     const openingHoursHeading = props.officeType === 'HMS' ? getLabel('openingHours') : getLabel('openingHoursWithoutAppointment');
 
     return (
@@ -54,12 +53,6 @@ export const SingleReception = (props: SingleReceptionProps) => {
                     </Heading>
                     <OpeningHours openingHours={futureOpeningHoursExceptions} language={language} />
                 </>
-            )}
-            {hasOpeningHours && props.officeType !== 'HMS' && (
-                <div className={style.appointmentBookingInfo}>
-                    <InformationSquareFillIcon className={style.iconInfo} aria-hidden="true" />
-                    {getLabel('youCanMakeAppointment')}
-                </div>
             )}
         </div>
     );
