@@ -1,5 +1,6 @@
 import { Address } from './types';
 import dayjs from 'dayjs';
+import 'dayjs/locale/nb';
 
 export const formatAddress = (address?: Address) => {
     if (!address) {
