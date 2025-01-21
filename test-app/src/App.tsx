@@ -18,9 +18,7 @@ const mockReception = [
             { dag: 'Torsdag', fra: '09:00', til: '15:00' },
             { dag: 'Fredag', fra: '09:00', til: '14:00' },
             // Spesielle åpningstider
-            { dato: '2050-05-01', stengt: 'true' },
-            { dato: '2050-05-17', stengt: 'true' },
-            { dato: '2050-06-24', fra: '10:00', til: '14:00' },
+
             { dato: '2050-12-24', stengt: 'true' },
             { dato: '2050-12-31', fra: '09:00', til: '12:00' },
         ],
