@@ -32,12 +32,7 @@ const mockReception = [
 ];
 
 function App() {
-    return (
-        <div style={{ padding: '2rem' }}>
-            <h1>Test App</h1>
-            <Reception receptions={mockReception} language="no" officeType="office" />
-        </div>
-    );
+    return <Reception receptions={mockReception} language="no" officeType="office" />;
 }
 
 export default App;
