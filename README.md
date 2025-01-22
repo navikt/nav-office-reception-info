@@ -7,33 +7,12 @@ Pakke for å vise informasjon om publikumsmottak. Satt opp med Vite i ["library 
 ## Lokal utvikling:
 
 ```
-npm i
-npm link
-```
-
-### For testing i nav-enonicxp-frontend:
-
-```
-npm link ../nav-enonicxp-frontend/node_modules/react
-```
-
-### For testing i personopplysninger:
-
-```
-npm link ../personopplysninger/node_modules/react
-```
-
-(npm link ../konsument-app/node_modules/react må kjøres på ny hver gang etter npm install)
-
-```
+npm install
 npm run build
+npm run dev
 ```
 
-### I konsument-app (nav-enonicxp-frontend, personopplysninger, etc.):
-
-```
-npm link nav-office-reception-info
-```
+Ved endringer i selve pakken, kjør `npm run build` igjen for å se endringene i test-app på http://localhost:5173/
 
 ## Henvendelser
 

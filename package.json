@@ -14,7 +14,8 @@
     "scripts": {
         "build": "tsc --p ./tsconfig-build.json && vite build",
         "prepublishOnly": "npm run build",
-        "lint": "npx eslint"
+        "lint": "npx eslint",
+        "dev": "vite test-app"
     },
     "repository": {
         "type": "git",
