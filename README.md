@@ -14,6 +14,9 @@ npm run dev
 
 Ved endringer i selve pakken, kjør `npm run build` igjen for å se endringene i test-app på http://localhost:5173/
 
+## Publiser ny versjon:
+Bruk [GitHub Actions](https://github.com/navikt/nav-office-reception-info/actions), ikke [Release](https://github.com/navikt/nav-office-reception-info/releases).
+
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/personbruker
