@@ -35,4 +35,4 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Push new version tag
               if: steps.publish.outcome == 'success'
-              run: git push
+              run: git push origin --tags
