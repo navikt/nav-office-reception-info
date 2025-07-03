@@ -33,15 +33,18 @@ jobs:
                   node-version: '20'
                   registry-url: 'https://npm.pkg.github.com'
                   cache: 'npm'
-            - name: Bump version
-              run: |
-                  git config --global user.name '${{ github.actor }}'
-                  git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-                  echo "VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }})" >> $GITHUB_ENV
             - name: Install dependencies
               run: npm ci
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+            - name: Bump version
+              id: version-bump
+              run: |
+                  git config --global user.name '${{ github.actor }}'
+                  git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+                  VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }})
+                  echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
+                  echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
             - name: Build package
               run: npm run build
             - name: Publish package
@@ -49,11 +52,11 @@ jobs:
               run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Push new version tag
+            - name: Push version changes
               if: steps.publish.outcome == 'success'
-              run: git push origin --tags
+              run: git push origin HEAD:${{ github.ref_name }}
             - name: Create release
               uses: softprops/action-gh-release@v1
               with:
-                  tag_name: ${{ env.VERSION_TAG }}
+                  tag_name: ${{ steps.version-bump.outputs.version_tag }}
                   body: ${{ github.event.inputs.releaseBody }}
