@@ -45,6 +45,8 @@ jobs:
                   VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }})
                   echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
                   echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+            - name: Push new version tag
+              run: git push origin --tags
             - name: Build package
               run: npm run build
             - name: Publish package
@@ -52,9 +54,6 @@ jobs:
               run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Push new version tag
-              if: steps.publish.outcome == 'success'
-              run: git push origin --tags
             - name: Create release
               uses: softprops/action-gh-release@v1
               with:
