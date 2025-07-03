@@ -42,11 +42,9 @@ jobs:
               run: |
                   git config --global user.name '${{ github.actor }}'
                   git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-                  VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }})
-                  echo "VERSION_TAG=$VERSION_TAG" >> $GITHUB_ENV
-                  echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
-            - name: Push new version tag
-              run: git push origin --tags
+                  VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }} --no-git-tag-version)
+                  echo "VERSION_TAG=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+                  echo "version_tag=v$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
             - name: Build package
               run: npm run build
             - name: Publish package
@@ -54,6 +52,11 @@ jobs:
               run: npm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Create and push git tag
+              if: steps.publish.outcome == 'success'
+              run: |
+                  git tag ${{ steps.version-bump.outputs.version_tag }}
+                  git push origin ${{ steps.version-bump.outputs.version_tag }}
             - name: Create release
               uses: softprops/action-gh-release@v1
               with:
