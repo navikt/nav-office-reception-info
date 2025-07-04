@@ -1,6 +1,6 @@
 import React from 'react';
-import { Reception } from '../../dist/nav-office-reception-info.js';
-import '../../dist/nav-office-reception-info.css';
+import { Reception } from '../../dist/main.js';
+import '../../dist/style.css';
 
 const mockReception = [
     {
