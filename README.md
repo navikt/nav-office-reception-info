@@ -19,8 +19,8 @@ Bruk [GitHub Actions](https://github.com/navikt/nav-office-reception-info/action
 
 ## Henvendelser
 
-Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/personbruker
+Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/navno
 
 ### For Nav-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #team-personbruker
+Interne henvendelser kan sendes via Slack i kanalen #team-navno
