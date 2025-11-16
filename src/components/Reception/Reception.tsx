@@ -47,7 +47,7 @@ export const Reception = ({ receptions, language, officeType }: Props) => {
     }
 
     return (
-        <>
+        <div>
             <BodyLong className={style.chooseBetweenOffices}>{getOfficeTranslations('chooseBetweenOffices')}</BodyLong>
             <Tabs value={state} onChange={setState} className={style.officeTabs}>
                 <Tabs.List>
@@ -65,6 +65,6 @@ export const Reception = ({ receptions, language, officeType }: Props) => {
                     );
                 })}
             </Tabs>
-        </>
+        </div>
     );
 };
