@@ -40,7 +40,7 @@ jobs:
               run: git push origin HEAD:${{ github.ref_name }}
             - name: Create beta release
               if: steps.publish.outcome == 'success'
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               with:
                   tag_name: ${{ steps.version-bump.outputs.version_tag }}
                   name: ${{ steps.version-bump.outputs.version_tag }} (Beta)
