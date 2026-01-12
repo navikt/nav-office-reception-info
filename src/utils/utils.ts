@@ -41,3 +41,13 @@ export const formatDate = ({ datetime, language = 'nb', short = false, year = fa
 
     return datetime ? dayjs(datetime).locale(currentLocale).format(format) : datetime;
 };
+
+export const forceArray = <T>(data: T | T[]): T[] => {
+    if (!data) {
+        return [];
+    }
+    if (Array.isArray(data)) {
+        return data;
+    }
+    return [data];
+};
