@@ -1,5 +1,5 @@
 import { AudienceReception, OpeningHours as OpeningHoursProps } from '../../utils/types.ts';
-import { formatAddress } from '../../utils/utils.ts';
+import { forceArray, formatAddress } from '../../utils/utils.ts';
 
 type OpeningHoursBuckets = {
     regular: OpeningHoursProps[];
@@ -17,7 +17,7 @@ type FormattedAudienceReception = {
 const dagArr: OpeningHoursProps['dag'][] = ['Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag'] as const;
 
 export const formatAudienceReception = (audienceReception: AudienceReception): FormattedAudienceReception => {
-    const aapningstider = audienceReception.aapningstider?.reduce<OpeningHoursBuckets>(
+    const aapningstider = forceArray<OpeningHoursProps>(audienceReception.aapningstider).reduce<OpeningHoursBuckets>(
         (acc, elem) => {
             if (elem.dato) {
                 acc.exceptions.push(elem);
