@@ -43,16 +43,16 @@
         "@types/node": "24.1.0",
         "@types/react": "18.3.9",
         "@types/react-dom": "18.3.0",
-        "@typescript-eslint/eslint-plugin": "8.7.0",
-        "@typescript-eslint/parser": "8.7.0",
+        "@typescript-eslint/eslint-plugin": "8.54.0",
+        "@typescript-eslint/parser": "8.54.0",
         "@vitejs/plugin-react-swc": "3.9.0",
         "eslint": "9.39.2",
         "eslint-plugin-react-hooks": "5.1.0-rc-778e1ed2-20240926",
-        "eslint-plugin-react-refresh": "0.4.12",
-        "sass": "1.79.3",
-        "typescript": "5.5.4",
+        "eslint-plugin-react-refresh": "0.4.26",
+        "sass": "1.97.3",
+        "typescript": "5.9.3",
         "vite": "6.4.1",
-        "vite-plugin-dts": "4.2.2",
-        "vite-plugin-lib-inject-css": "2.1.1"
+        "vite-plugin-dts": "4.5.4",
+        "vite-plugin-lib-inject-css": "2.2.2"
     }
 }
