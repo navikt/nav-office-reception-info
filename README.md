@@ -6,15 +6,30 @@ Pakke for å vise informasjon om publikumsmottak. Satt opp med Vite i ["library 
 
 ## Lokal utvikling:
 
-```
-npm install
-npm run build
-npm run dev
+### Installere pnpm
+
+Dette prosjektet bruker **pnpm** som package manager. Node.js kommer med Corepack som automatisk bruker riktig pnpm-versjon:
+
+```bash
+corepack enable
 ```
 
-Ved endringer i selve pakken, kjør `npm run build` igjen for å se endringene i test-app på http://localhost:5173/
+Corepack leser `packageManager`-feltet i `package.json` og installerer riktig versjon automatisk.
+
+**Merk:** Når Corepack er aktivert, vil `pnpm`-kommandoer ikke fungere.
+
+### Kjøre lokalt
+
+```
+pnpm install
+pnpm run build
+pnpm run dev
+```
+
+Ved endringer i selve pakken, kjør `pnpm run build` igjen for å se endringene i test-app på http://localhost:5173/
 
 ## Publiser ny versjon:
+
 Bruk [GitHub Actions](https://github.com/navikt/nav-office-reception-info/actions), ikke [Release](https://github.com/navikt/nav-office-reception-info/releases).
 
 ## Henvendelser
