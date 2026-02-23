@@ -27,14 +27,16 @@ jobs:
         steps:
             - name: Checkout branch
               uses: actions/checkout@v6
+            - name: Install pnpm
+              uses: pnpm/action-setup@v4
             - name: Setup node.js
               uses: actions/setup-node@v6
               with:
                   node-version: '24'
                   registry-url: 'https://npm.pkg.github.com'
-                  cache: 'npm'
+                  cache: 'pnpm'
             - name: Install dependencies
-              run: npm ci --ignore-scripts
+              run: pnpm install --frozen-lockfile
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
             - name: Bump version
@@ -42,14 +44,14 @@ jobs:
               run: |
                   git config --global user.name '${{ github.actor }}'
                   git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-                  VERSION_TAG=$(npm version ${{ github.event.inputs.releaseType }} --no-git-tag-version)
+                  VERSION_TAG=$(pnpm version ${{ github.event.inputs.releaseType }} --no-git-tag-version)
                   echo "VERSION_TAG=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
                   echo "version_tag=v$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
             - name: Build package
-              run: npm run build
+              run: pnpm run build
             - name: Publish package
               id: publish
-              run: npm publish
+              run: pnpm publish
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create and push git tag
