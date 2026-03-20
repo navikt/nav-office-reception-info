@@ -13,20 +13,22 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Build and publish package
+        id: build-and-publish
         uses: ./.github/actions/build-and-publish-package
         with:
           releaseType: beta
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Push version changes
-        if: steps.publish.outcome == 'success'
+        if: steps.build-and-publish.outcome == 'success'
         run: git push origin HEAD:${{ github.ref_name }}
 
       - name: Create beta release
-        if: steps.publish.outcome == 'success'
+        if: steps.build-and-publish.outcome == 'success'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version-bump.outputs.version_tag }}
-          name: ${{ steps.version-bump.outputs.version_tag }} (Beta)
+          tag_name: ${{ steps.build-and-publish.outputs.version_tag }}
+          name: ${{ steps.build-and-publish.outputs.version_tag }} (Beta)
           body: |
             🧪 **Beta Release**
             
