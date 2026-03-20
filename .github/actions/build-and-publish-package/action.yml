@@ -50,9 +50,11 @@ runs:
       run: |
         git config --global user.name '${{ github.actor }}'
         git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-        VERSION_TAG=$(pnpm version ${{ inputs.releaseType }} --no-git-tag-version)
-        echo "VERSION_TAG=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
-        echo "version_tag=v$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+        CURRENT_VERSION=$(node -p "require('./package.json').version")
+        NEXT_VERSION=$(node -e "const version = process.argv[1]; const releaseType = process.argv[2]; const [core] = version.split('-'); const [major, minor, patch] = core.split('.').map(Number); const nextVersion = releaseType === 'patch' ? `${major}.${minor}.${patch + 1}` : releaseType === 'minor' ? `${major}.${minor + 1}.0` : releaseType === 'major' ? `${major + 1}.0.0` : ''; if (!nextVersion) { throw new Error(`Unsupported release type: ${releaseType}`); } process.stdout.write(nextVersion);" "$CURRENT_VERSION" "${{ inputs.releaseType }}")
+        pnpm version "$NEXT_VERSION" --no-git-tag-version
+        echo "VERSION_TAG=v$NEXT_VERSION" >> $GITHUB_ENV
+        echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
 
     - name: Publish package (beta)
       shell: bash
