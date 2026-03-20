@@ -21,7 +21,8 @@ runs:
       with:
         node-version: '24'
         registry-url: 'https://npm.pkg.github.com'
-        cache: 'npm'
+        cache: 'pnpm'
+        cache-dependency-path: 'pnpm-lock.yaml'
 
     - name: Install dependencies
       shell: bash
