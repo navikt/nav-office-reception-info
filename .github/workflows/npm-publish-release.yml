@@ -1,66 +1,46 @@
 name: Publish release (main only)
 on:
-    workflow_dispatch:
-        inputs:
-            releaseType:
-                type: choice
-                required: true
-                description: 'Release type'
-                default: 'patch'
-                options:
-                    - patch
-                    - minor
-                    - major
-            releaseBody:
-                type: string
-                required: true
-                description: 'Release description'
+  workflow_dispatch:
+    inputs:
+      releaseType:
+        type: choice
+        required: true
+        description: 'Release type'
+        default: 'patch'
+        options:
+          - patch
+          - minor
+          - major
+      releaseBody:
+        type: string
+        required: true
+        description: 'Release description'
 
 jobs:
-    publish:
-        name: Publish to package registry
-        runs-on: ubuntu-latest
-        if: github.ref == 'refs/heads/main'
-        permissions:
-            contents: write
-            packages: write
-        steps:
-            - name: Checkout branch
-              uses: actions/checkout@v6
-            - name: Install pnpm
-              uses: pnpm/action-setup@v4
-            - name: Setup node.js
-              uses: actions/setup-node@v6
-              with:
-                  node-version: '24'
-                  registry-url: 'https://npm.pkg.github.com'
-                  cache: 'pnpm'
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
-            - name: Bump version
-              id: version-bump
-              run: |
-                  git config --global user.name '${{ github.actor }}'
-                  git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-                  VERSION_TAG=$(pnpm version ${{ github.event.inputs.releaseType }} --no-git-tag-version)
-                  echo "VERSION_TAG=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
-                  echo "version_tag=v$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
-            - name: Build package
-              run: pnpm run build
-            - name: Publish package
-              id: publish
-              run: pnpm publish --no-git-checks
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Create and push git tag
-              if: steps.publish.outcome == 'success'
-              run: |
-                  git tag ${{ steps.version-bump.outputs.version_tag }}
-                  git push origin ${{ steps.version-bump.outputs.version_tag }}
-            - name: Create release
-              uses: softprops/action-gh-release@v2
-              with:
-                  tag_name: ${{ steps.version-bump.outputs.version_tag }}
-                  body: ${{ github.event.inputs.releaseBody }}
+  publish:
+    name: Publish to package registry
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v6
+
+      - name: Build and publish package
+        uses: ./.github/actions/build-and-publish-package
+        with:
+          releaseType: ${{ github.event.inputs.releaseType }}
+
+      - name: Create and push git tag
+        if: steps.publish.outcome == 'success'
+        run: |
+          git tag ${{ steps.version-bump.outputs.version_tag }}
+          git push origin ${{ steps.version-bump.outputs.version_tag }}
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version-bump.outputs.version_tag }}
+          body: ${{ github.event.inputs.releaseBody }}
