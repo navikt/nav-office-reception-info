@@ -4,6 +4,9 @@ inputs:
   releaseType:
     required: true
     description: Type of version bump (e.g. beta/patch/minor/major)
+  NODE_AUTH_TOKEN:
+    required: true
+    description: Reader token
 
 outputs:
   version_tag:
@@ -28,7 +31,7 @@ runs:
       shell: bash
       run: pnpm install --frozen-lockfile
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
 
     - name: Bump version (beta)
       shell: bash

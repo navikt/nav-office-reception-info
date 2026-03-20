@@ -17,6 +17,7 @@ jobs:
         uses: ./.github/actions/build-and-publish-package
         with:
           releaseType: beta
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
 
       - name: Push version changes
         if: steps.build-and-publish.outcome == 'success'
