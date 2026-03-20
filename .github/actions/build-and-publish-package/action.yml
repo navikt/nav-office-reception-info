@@ -1,0 +1,66 @@
+name: Build and publich package
+
+inputs:
+  releaseType:
+    required: true
+    description: Type of version bump (e.g. beta/patch/minor/major)
+
+runs:
+  using: composite
+  steps:
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Setup node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24'
+        registry-url: 'https://npm.pkg.github.com'
+        cache: 'npm'
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+
+    - name: Bump version (beta)
+      shell: bash
+      id: version-bump
+      if: ${{ github.event.inputs.releaseType == 'beta' }}
+      run: |
+        git config --global user.name '${{ github.actor }}'
+        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+        VERSION_TAG=$(pnpm version prerelease --preid beta)
+        echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+
+    - name: Bump version (patch/minor/major)
+      shell: bash
+      id: version-bump
+      if: ${{ github.event.inputs.releaseType == 'patch' || github.event.inputs.releaseType == 'minor' || github.event.inputs.releaseType == 'major' }}
+      run: |
+        git config --global user.name '${{ github.actor }}'
+        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+        VERSION_TAG=$(pnpm version ${{ github.event.inputs.releaseType }} --no-git-tag-version)
+        echo "VERSION_TAG=v$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+        echo "version_tag=v$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+    - name: Publish package (beta)
+      shell: bash
+      if: ${{ github.event.inputs.releaseType == 'beta' }}
+      id: publish
+      run: pnpm publish --tag beta --no-git-checks
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Publish package (patch/minor/major)
+      if: ${{ github.event.inputs.releaseType == 'patch' || github.event.inputs.releaseType == 'minor' || github.event.inputs.releaseType == 'major' }}
+      shell: bash
+      id: publish
+      run: pnpm publish --no-git-checks
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build package
+      shell: bash
+      run: pnpm run build
