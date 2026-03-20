@@ -16,6 +16,7 @@ jobs:
         uses: ./.github/actions/build-and-publish-package
         with:
           releaseType: beta
+          id: version-bump-beta
 
       - name: Push version changes
         if: steps.publish.outcome == 'success'
@@ -25,8 +26,8 @@ jobs:
         if: steps.publish.outcome == 'success'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.version-bump.outputs.version_tag }}
-          name: ${{ steps.version-bump.outputs.version_tag }} (Beta)
+          tag_name: ${{ steps.version-bump-beta.outputs.version_tag }}
+          name: ${{ steps.version-bump-beta.outputs.version_tag }} (Beta)
           body: |
             🧪 **Beta Release**
             

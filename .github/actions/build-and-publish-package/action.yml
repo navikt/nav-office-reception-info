@@ -4,6 +4,9 @@ inputs:
   releaseType:
     required: true
     description: Type of version bump (e.g. beta/patch/minor/major)
+  id:
+    required: true
+    description: id for bump version
 
 runs:
   using: composite
@@ -26,7 +29,7 @@ runs:
 
     - name: Bump version (beta)
       shell: bash
-      id: version-bump
+      id: ${{inputs.id}}
       if: ${{ github.event.inputs.releaseType == 'beta' }}
       run: |
         git config --global user.name '${{ github.actor }}'
@@ -36,7 +39,7 @@ runs:
 
     - name: Bump version (patch/minor/major)
       shell: bash
-      id: version-bump
+      id: ${{inputs.id}}
       if: ${{ github.event.inputs.releaseType == 'patch' || github.event.inputs.releaseType == 'minor' || github.event.inputs.releaseType == 'major' }}
       run: |
         git config --global user.name '${{ github.actor }}'
