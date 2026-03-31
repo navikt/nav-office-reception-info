@@ -13,8 +13,8 @@ $sectionPaddingDesktop: 2.5rem;
 $metadataIndent: 34px;
 
 .singleReception {
-    background-color: var(--a-deepblue-50);
-    border-radius: var(--a-border-radius-small);
+    background-color: var(--ax-brand-blue-100);
+    border-radius: var(--ax-radius-2);
     padding: $sectionPaddingMobile;
 
     @media #{$mq-screen-tablet} {
@@ -27,7 +27,7 @@ $metadataIndent: 34px;
 
     table {
         margin-left: $metadataIndent;
-        margin-bottom: var(--a-spacing-3);
+        margin-bottom: var(--ax-space-12);
         width: auto;
         th,
         td {
@@ -51,7 +51,7 @@ $metadataIndent: 34px;
 
         :global(.openingInformation) {
             min-width: 7.3rem;
-            font-weight: var(--a-font-weight-bold);
+            font-weight: var(--ax-font-weight-bold);
 
             &:first-letter {
                 text-transform: capitalize;
@@ -88,7 +88,7 @@ $metadataIndent: 34px;
 }
 
 .address {
-    margin-bottom: var(--a-spacing-6);
+    margin-bottom: var(--ax-space-24);
     &:last-child {
         margin-bottom: 0;
     }
