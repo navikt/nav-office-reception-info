@@ -13,7 +13,7 @@
         color: var(--ax-text-neutral);
 
         &:hover {
-            background-color: var(--ax-brand-blue-300);
+            background-color: var(--ax-brand-blue-300) !important;
             box-shadow: none;
         }
         &:not(:last-of-type) {
