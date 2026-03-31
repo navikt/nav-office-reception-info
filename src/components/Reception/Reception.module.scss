@@ -3,11 +3,11 @@
     flex-direction: column;
     row-gap: var(--ax-space-16);
 
-    :global(.navds-tabs__tablist-wrapper) {
+    :global(.aksel-tabs__tablist-wrapper) {
         box-shadow: none;
     }
 
-    :global(.navds-tabs__tab) {
+    :global(.aksel-tabs__tab) {
         background-color: var(--ax-bg-neutral-soft);
         border-radius: var(--ax-radius-4);
         color: var(--ax-text-neutral);
@@ -21,7 +21,7 @@
         }
     }
 
-    :global(.navds-tabs__tab[aria-selected='true']:not(:focus)) {
+    :global(.aksel-tabs__tab[aria-selected='true']:not(:focus)) {
         background-color: var(--ax-brand-blue-100);
         box-shadow: none;
     }

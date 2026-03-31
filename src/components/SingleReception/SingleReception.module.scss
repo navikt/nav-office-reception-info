@@ -95,7 +95,7 @@ $metadataIndent: 34px;
 }
 
 .addressLine {
-    margin-left: $metadataIndent !important; //quick-fix, disse overstyres av .navds-body-short i personopplysninger
+    margin-left: $metadataIndent !important; //quick-fix, disse overstyres av .aksel-body-short i personopplysninger
     margin-bottom: 1rem !important;
 
     &:last-child {
