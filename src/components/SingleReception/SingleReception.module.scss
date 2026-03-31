@@ -13,7 +13,7 @@ $sectionPaddingDesktop: 2.5rem;
 $metadataIndent: 34px;
 
 .singleReception {
-    background-color: var(--ax-brand-blue-100);
+    background-color: var(--ax-brand-blue-200);
     border-radius: var(--ax-radius-2);
     padding: $sectionPaddingMobile;
 
@@ -95,7 +95,7 @@ $metadataIndent: 34px;
 }
 
 .addressLine {
-    margin-left: $metadataIndent !important; //quick-fix, disse overstyres av .aksel-body-short i personopplysninger
+    margin-left: $metadataIndent !important; //quick-fix, disse overstyres av .navds-body-short i personopplysninger
     margin-bottom: 1rem !important;
 
     &:last-child {
