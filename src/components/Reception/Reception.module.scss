@@ -21,7 +21,7 @@
         }
     }
 
-    :global(.aksel-tabs__tab[aria-selected='true']:not(:focus)) {
+    :global(.aksel-tabs__tab[aria-selected='true']) {
         background-color: var(--ax-brand-blue-200);
         box-shadow: none;
     }
