@@ -11,10 +11,10 @@
         background-color: var(--ax-bg-neutral-soft);
         border-radius: var(--ax-radius-4);
         color: var(--ax-text-neutral);
+        box-shadow: none;
 
         &:hover {
             background-color: var(--ax-brand-blue-300) !important;
-            box-shadow: none;
         }
         &:not(:last-of-type) {
             margin-right: 1rem;
@@ -23,7 +23,6 @@
 
     :global(.aksel-tabs__tab[aria-selected='true']) {
         background-color: var(--ax-brand-blue-200);
-        box-shadow: none;
     }
 }
 
