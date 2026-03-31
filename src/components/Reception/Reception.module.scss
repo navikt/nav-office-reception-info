@@ -14,7 +14,7 @@
         box-shadow: none;
 
         &:hover {
-            background-color: var(--ax-brand-blue-300) !important;
+            background-color: var(--ax-brand-blue-300);
         }
         &:not(:last-of-type) {
             margin-right: 1rem;
