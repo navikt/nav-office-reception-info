@@ -2,42 +2,43 @@ name: Publish beta
 on: workflow_dispatch
 
 jobs:
-  publish:
-    name: Publish to package registry
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v6
+    publish:
+        name: Publish to package registry
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v6
 
-      - name: Build and publish package
-        id: build-and-publish
-        uses: ./.github/actions/build-and-publish-package
-        with:
-          releaseType: beta
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+            - name: Build and publish package
+              id: build-and-publish
+              uses: ./.github/actions/build-and-publish-package
+              with:
+                  releaseType: beta
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+                  PUBLISH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push version changes
-        if: steps.build-and-publish.outcome == 'success'
-        run: git push origin HEAD:${{ github.ref_name }}
+            - name: Push version changes
+              if: steps.build-and-publish.outcome == 'success'
+              run: git push origin HEAD:${{ github.ref_name }}
 
-      - name: Create beta release
-        if: steps.build-and-publish.outcome == 'success'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.build-and-publish.outputs.version_tag }}
-          name: ${{ steps.build-and-publish.outputs.version_tag }} (Beta)
-          body: |
-            🧪 **Beta Release**
-            
-            This is a pre-release version for testing purposes.
-            
-            **Installation:**
-            ```bash
-            pnpm install @navikt/nav-office-reception-info@beta
-            ```
-            
-            Please report any issues you encounter!
-          prerelease: true
+            - name: Create beta release
+              if: steps.build-and-publish.outcome == 'success'
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ steps.build-and-publish.outputs.version_tag }}
+                  name: ${{ steps.build-and-publish.outputs.version_tag }} (Beta)
+                  body: |
+                      🧪 **Beta Release**
+
+                      This is a pre-release version for testing purposes.
+
+                      **Installation:**
+                      ```bash
+                      pnpm install @navikt/nav-office-reception-info@beta
+                      ```
+
+                      Please report any issues you encounter!
+                  prerelease: true

@@ -1,48 +1,49 @@
 name: Publish release (main only)
 on:
-  workflow_dispatch:
-    inputs:
-      releaseType:
-        type: choice
-        required: true
-        description: 'Release type'
-        default: 'patch'
-        options:
-          - patch
-          - minor
-          - major
-      releaseBody:
-        type: string
-        required: true
-        description: 'Release description'
+    workflow_dispatch:
+        inputs:
+            releaseType:
+                type: choice
+                required: true
+                description: 'Release type'
+                default: 'patch'
+                options:
+                    - patch
+                    - minor
+                    - major
+            releaseBody:
+                type: string
+                required: true
+                description: 'Release description'
 
 jobs:
-  publish:
-    name: Publish to package registry
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-    permissions:
-      contents: write
-      packages: write
-    steps:
-      - name: Checkout branch
-        uses: actions/checkout@v6
+    publish:
+        name: Publish to package registry
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main'
+        permissions:
+            contents: write
+            packages: write
+        steps:
+            - name: Checkout branch
+              uses: actions/checkout@v6
 
-      - name: Build and publish package
-        id: build-and-publish
-        uses: ./.github/actions/build-and-publish-package
-        with:
-          releaseType: ${{ github.event.inputs.releaseType }}
-          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+            - name: Build and publish package
+              id: build-and-publish
+              uses: ./.github/actions/build-and-publish-package
+              with:
+                  releaseType: ${{ github.event.inputs.releaseType }}
+                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+                  PUBLISH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create and push git tag
-        if: steps.build-and-publish.outcome == 'success'
-        run: |
-          git tag ${{ steps.build-and-publish.outputs.version_tag }}
-          git push origin ${{ steps.build-and-publish.outputs.version_tag }}
+            - name: Create and push git tag
+              if: steps.build-and-publish.outcome == 'success'
+              run: |
+                  git tag ${{ steps.build-and-publish.outputs.version_tag }}
+                  git push origin ${{ steps.build-and-publish.outputs.version_tag }}
 
-      - name: Create release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.build-and-publish.outputs.version_tag }}
-          body: ${{ github.event.inputs.releaseBody }}
+            - name: Create release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: ${{ steps.build-and-publish.outputs.version_tag }}
+                  body: ${{ github.event.inputs.releaseBody }}
