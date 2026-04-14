@@ -70,6 +70,9 @@ runs:
                 process.stdout.write(nextVersion);
               ')
               pnpm version "$NEXT_VERSION" --no-git-tag-version
+              git add package.json
+              git commit -m "v$NEXT_VERSION"
+              git push origin HEAD:${{ github.ref_name }}
               echo "VERSION_TAG=v$NEXT_VERSION" >> $GITHUB_ENV
               echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
 
@@ -86,7 +89,3 @@ runs:
           run: pnpm publish --no-git-checks
           env:
               NODE_AUTH_TOKEN: ${{ inputs.PUBLISH_TOKEN }}
-
-        - name: Build package
-          shell: bash
-          run: pnpm run build
