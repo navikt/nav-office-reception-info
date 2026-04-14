@@ -1,88 +1,91 @@
-name: Build and publich package
+name: Build and publish package
+description: Build and publish npm package to GitHub Package Registry
 
 inputs:
-  releaseType:
-    required: true
-    description: Type of version bump (e.g. beta/patch/minor/major)
-  NODE_AUTH_TOKEN:
-    required: true
-    description: Reader token
+    releaseType:
+        required: true
+        description: Type of version bump (e.g. beta/patch/minor/major)
+    NODE_AUTH_TOKEN:
+        required: true
+        description: Token for installing dependencies
+    PUBLISH_TOKEN:
+        required: true
+        description: Token for publishing
 
 outputs:
-  version_tag:
-    description: Created package version tag
-    value: ${{ steps.bump-beta.outputs.version_tag || steps.bump-release.outputs.version_tag }}
+    version_tag:
+        description: Created package version tag
+        value: ${{ steps.bump-beta.outputs.version_tag || steps.bump-release.outputs.version_tag }}
 
 runs:
-  using: composite
-  steps:
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
+    using: composite
+    steps:
+        - name: Install pnpm
+          uses: pnpm/action-setup@v4
 
-    - name: Setup node.js
-      uses: actions/setup-node@v6
-      with:
-        node-version: '24'
-        registry-url: 'https://npm.pkg.github.com'
-        cache: 'pnpm'
-        cache-dependency-path: 'pnpm-lock.yaml'
+        - name: Setup node.js
+          uses: actions/setup-node@v6
+          with:
+              node-version: '24'
+              registry-url: 'https://npm.pkg.github.com'
+              cache: 'pnpm'
+              cache-dependency-path: 'pnpm-lock.yaml'
 
-    - name: Install dependencies
-      shell: bash
-      run: pnpm install --frozen-lockfile
-      env:
-        NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
+        - name: Install dependencies
+          shell: bash
+          run: pnpm install --frozen-lockfile
+          env:
+              NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
 
-    - name: Bump version (beta)
-      shell: bash
-      id: bump-beta
-      if: ${{ inputs.releaseType == 'beta' }}
-      run: |
-        git config --global user.name '${{ github.actor }}'
-        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-        VERSION_TAG=$(pnpm version prerelease --preid beta)
-        echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+        - name: Bump version (beta)
+          shell: bash
+          id: bump-beta
+          if: ${{ inputs.releaseType == 'beta' }}
+          run: |
+              git config --global user.name '${{ github.actor }}'
+              git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+              VERSION_TAG=$(pnpm version prerelease --preid beta)
+              echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
 
-    - name: Bump version (patch/minor/major)
-      shell: bash
-      id: bump-release
-      if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
-      run: |
-        git config --global user.name '${{ github.actor }}'
-        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-        CURRENT_VERSION=$(node -p "require('./package.json').version")
-        NEXT_VERSION=$(CURRENT_VERSION="$CURRENT_VERSION" RELEASE_TYPE="${{ inputs.releaseType }}" node -e '
-          const version = process.env.CURRENT_VERSION;
-          const releaseType = process.env.RELEASE_TYPE;
-          const [major, minor, patch] = version.split("-")[0].split(".").map(Number);
-          const nextVersion = releaseType === "patch"
-            ? [major, minor, patch + 1].join(".")
-            : releaseType === "minor"
-              ? [major, minor + 1, 0].join(".")
-              : releaseType === "major"
-                ? [major + 1, 0, 0].join(".")
-                : "";
-          if (!nextVersion) throw new Error("Unsupported release type: " + releaseType);
-          process.stdout.write(nextVersion);
-        ')
-        pnpm version "$NEXT_VERSION" --no-git-tag-version
-        echo "VERSION_TAG=v$NEXT_VERSION" >> $GITHUB_ENV
-        echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
+        - name: Bump version (patch/minor/major)
+          shell: bash
+          id: bump-release
+          if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
+          run: |
+              git config --global user.name '${{ github.actor }}'
+              git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+              CURRENT_VERSION=$(node -p "require('./package.json').version")
+              NEXT_VERSION=$(CURRENT_VERSION="$CURRENT_VERSION" RELEASE_TYPE="${{ inputs.releaseType }}" node -e '
+                const version = process.env.CURRENT_VERSION;
+                const releaseType = process.env.RELEASE_TYPE;
+                const [major, minor, patch] = version.split("-")[0].split(".").map(Number);
+                const nextVersion = releaseType === "patch"
+                  ? [major, minor, patch + 1].join(".")
+                  : releaseType === "minor"
+                    ? [major, minor + 1, 0].join(".")
+                    : releaseType === "major"
+                      ? [major + 1, 0, 0].join(".")
+                      : "";
+                if (!nextVersion) throw new Error("Unsupported release type: " + releaseType);
+                process.stdout.write(nextVersion);
+              ')
+              pnpm version "$NEXT_VERSION" --no-git-tag-version
+              git add package.json
+              git commit -m "v$NEXT_VERSION"
+              git push origin HEAD:${{ github.ref_name }}
+              echo "VERSION_TAG=v$NEXT_VERSION" >> $GITHUB_ENV
+              echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
 
-    - name: Publish package (beta)
-      shell: bash
-      if: ${{ inputs.releaseType == 'beta' }}
-      run: pnpm publish --tag beta --no-git-checks
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Publish package (beta)
+          shell: bash
+          if: ${{ inputs.releaseType == 'beta' }}
+          run: pnpm publish --tag beta --no-git-checks
+          env:
+              NODE_AUTH_TOKEN: ${{ inputs.PUBLISH_TOKEN }}
 
-    - name: Publish package (patch/minor/major)
-      if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
-      shell: bash
-      run: pnpm publish --no-git-checks
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Build package
-      shell: bash
-      run: pnpm run build
+        - name: Publish package (patch/minor/major)
+          if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
+          shell: bash
+          run: pnpm publish --no-git-checks
+          env:
+              NODE_AUTH_TOKEN: ${{ inputs.PUBLISH_TOKEN }}
