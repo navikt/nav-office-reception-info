@@ -33,7 +33,7 @@ jobs:
               uses: ./.github/actions/build-and-publish-package
               with:
                   releaseType: ${{ github.event.inputs.releaseType }}
-                  NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   PUBLISH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Create and push git tag
