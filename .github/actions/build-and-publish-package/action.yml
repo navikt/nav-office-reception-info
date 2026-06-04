@@ -55,13 +55,19 @@ runs:
               NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
           run: |
               PKG_NAME=$(node -p "require('./package.json').name")
-              LATEST=$(npm view "$PKG_NAME" version 2>/dev/null || true)
-              if [ -n "$LATEST" ]; then
-                npm pkg set version="$LATEST"
-              fi
-              pnpm version ${{ inputs.releaseType }} --no-git-tag-version
-              VERSION_TAG="v$(node -p "require('./package.json').version")"
-              echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+              BASE=$(npm view "$PKG_NAME" version 2>/dev/null || node -p "require('./package.json').version")
+              NEXT_VERSION=$(BASE="$BASE" RELEASE_TYPE="${{ inputs.releaseType }}" node -e '
+                const [maj, min, pat] = process.env.BASE.split("-")[0].split(".").map(Number);
+                const t = process.env.RELEASE_TYPE;
+                const next = t === "patch" ? [maj, min, pat + 1]
+                  : t === "minor" ? [maj, min + 1, 0]
+                  : t === "major" ? [maj + 1, 0, 0]
+                  : null;
+                if (!next) throw new Error("Unsupported release type: " + t);
+                process.stdout.write(next.join("."));
+              ')
+              npm pkg set version="$NEXT_VERSION"
+              echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
 
         - name: Publish package (beta)
           shell: bash
