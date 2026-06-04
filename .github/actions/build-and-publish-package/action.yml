@@ -51,10 +51,36 @@ runs:
           shell: bash
           id: bump-release
           if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
+          env:
+              NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
           run: |
               git config --global user.name '${{ github.actor }}'
               git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-              CURRENT_VERSION=$(node -p "require('./package.json').version")
+              PKG_NAME=$(node -p "require('./package.json').name")
+              LOCAL_VERSION=$(node -p "require('./package.json').version")
+              CURRENT_VERSION=$(npm view "$PKG_NAME" versions --json 2>/dev/null | LOCAL_VERSION="$LOCAL_VERSION" node -e '
+                let data = "";
+                process.stdin.on("data", (c) => (data += c));
+                process.stdin.on("end", () => {
+                  let versions = [];
+                  try {
+                    const parsed = JSON.parse(data);
+                    versions = Array.isArray(parsed) ? parsed : [parsed];
+                  } catch {}
+                  const stable = versions.filter((v) => !v.includes("-"));
+                  const cmp = (a, b) => {
+                    const pa = a.split(".").map(Number);
+                    const pb = b.split(".").map(Number);
+                    for (let i = 0; i < 3; i++) {
+                      if (pa[i] !== pb[i]) return pa[i] - pb[i];
+                    }
+                    return 0;
+                  };
+                  const highest = stable.sort(cmp).pop();
+                  process.stdout.write(highest || process.env.LOCAL_VERSION);
+                });
+              ')
+              CURRENT_VERSION=${CURRENT_VERSION:-$LOCAL_VERSION}
               NEXT_VERSION=$(CURRENT_VERSION="$CURRENT_VERSION" RELEASE_TYPE="${{ inputs.releaseType }}" node -e '
                 const version = process.env.CURRENT_VERSION;
                 const releaseType = process.env.RELEASE_TYPE;
@@ -69,6 +95,7 @@ runs:
                 if (!nextVersion) throw new Error("Unsupported release type: " + releaseType);
                 process.stdout.write(nextVersion);
               ')
+              echo "Base version (from registry): $CURRENT_VERSION → next: $NEXT_VERSION"
               pnpm version "$NEXT_VERSION" --no-git-tag-version
               echo "VERSION_TAG=v$NEXT_VERSION" >> $GITHUB_ENV
               echo "version_tag=v$NEXT_VERSION" >> $GITHUB_OUTPUT
