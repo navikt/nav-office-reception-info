@@ -50,9 +50,10 @@
         "eslint": "9.39.2",
         "eslint-plugin-react-hooks": "5.1.0-rc-778e1ed2-20240926",
         "eslint-plugin-react-refresh": "0.5.2",
+        "rolldown": "1.0.2",
         "sass": "1.100.0",
         "typescript": "6.0.3",
-        "vite": "6.4.2",
+        "vite": "8.0.14",
         "vite-plugin-dts": "4.5.4",
         "vite-plugin-lib-inject-css": "2.2.2"
     }
