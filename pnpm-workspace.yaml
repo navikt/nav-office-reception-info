@@ -3,5 +3,3 @@ allowBuilds:
     '@swc/core': false
     esbuild: false
 minimumReleaseAge: 10080
-minimumReleaseAgeExclude:
-    - '@oxc-project/types'
