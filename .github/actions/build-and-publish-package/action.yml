@@ -51,9 +51,14 @@ runs:
           shell: bash
           id: bump-release
           if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
+          env:
+              NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
           run: |
-              git config --global user.name '${{ github.actor }}'
-              git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+              PKG_NAME=$(node -p "require('./package.json').name")
+              LATEST=$(npm view "$PKG_NAME" version 2>/dev/null || true)
+              if [ -n "$LATEST" ]; then
+                npm pkg set version="$LATEST"
+              fi
               pnpm version ${{ inputs.releaseType }} --no-git-tag-version
               VERSION_TAG="v$(node -p "require('./package.json').version")"
               echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
@@ -71,10 +76,3 @@ runs:
           run: pnpm publish --no-git-checks
           env:
               NODE_AUTH_TOKEN: ${{ inputs.PUBLISH_TOKEN }}
-
-        - name: Commit version bump
-          shell: bash
-          if: ${{ inputs.releaseType == 'patch' || inputs.releaseType == 'minor' || inputs.releaseType == 'major' }}
-          run: |
-              git commit -am "release: ${{ steps.bump-release.outputs.version_tag }}"
-              git push origin HEAD:main
