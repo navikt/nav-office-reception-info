@@ -54,7 +54,8 @@ runs:
           run: |
               git config --global user.name '${{ github.actor }}'
               git config --global user.email '${{ github.actor }}@users.noreply.github.com'
-              VERSION_TAG=$(pnpm version ${{ inputs.releaseType }} --no-git-tag-version)
+              pnpm version ${{ inputs.releaseType }} --no-git-tag-version
+              VERSION_TAG="v$(node -p "require('./package.json').version")"
               echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
 
         - name: Publish package (beta)
