@@ -8,7 +8,7 @@ import { esmExternalRequirePlugin } from 'rolldown/plugins';
 export default defineConfig({
     plugins: [
         react(),
-        dts({ include: ['src'] }),
+        dts({ include: ['src'], entryRoot: 'src' }),
         esmExternalRequirePlugin({ external: ['react', 'react/jsx-runtime', '@navikt/ds-react', 'dayjs'] }),
     ],
     build: {
