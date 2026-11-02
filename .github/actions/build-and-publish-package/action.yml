@@ -20,22 +20,10 @@ outputs:
 runs:
     using: composite
     steps:
-        - name: Install pnpm
-          uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-
-        - name: Setup node.js
-          uses: actions/setup-node@v6
+        - name: Setup Node, pnpm and install dependencies
+          uses: navikt/navno-actions/setup-node-pnpm@v1
           with:
-              node-version: '24'
-              registry-url: 'https://npm.pkg.github.com'
-              cache: 'pnpm'
-              cache-dependency-path: 'pnpm-lock.yaml'
-
-        - name: Install dependencies
-          shell: bash
-          run: pnpm install --frozen-lockfile
-          env:
-              NODE_AUTH_TOKEN: ${{ inputs.NODE_AUTH_TOKEN }}
+              reader-token: ${{ inputs.NODE_AUTH_TOKEN }}
 
         - name: Bump version (beta)
           shell: bash
