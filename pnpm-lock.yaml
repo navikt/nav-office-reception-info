@@ -174,7 +174,7 @@ importers:
         version: 8.7.0
       '@navikt/ds-react':
         specifier: ^8.0.0
-        version: 8.7.0(@types/react@19.2.15)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 8.7.0(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       dayjs:
         specifier: ^1.11.10
         version: 1.11.19
@@ -823,9 +823,6 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react@19.2.15':
-    resolution: {integrity: sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==}
-
   '@types/react@19.2.17':
     resolution: {integrity: sha512-MXfmqaVPEVgkBT/aY0aGCkRWWtByiYQXo3xdQ8r5RzuFrPiRn8Gar2tQdXSUQ2GKV3bkXckek89V8wQBY2Q/Aw==}
 
@@ -955,8 +952,8 @@ packages:
     engines: {node: '>=6.0.0'}
     hasBin: true
 
-  brace-expansion@5.0.9:
-    resolution: {integrity: sha512-ScQ4IuvIEF1TMlP7Zt+vjJ//9zlPb2SDcxWxM3bk8s6t6GGdJ7KO1dCcTidOPJKePW30LE/2cT7wCyPho9/Wxg==}
+  brace-expansion@5.0.12:
+    resolution: {integrity: sha512-YovQ3rzhaLMIrDjNDMkNS01tea93qhEhG5xy8f6+R0l+dw3Ki+5sCoIoI942iuLZTHWogWktgwVDhU09iNEimQ==}
     engines: {node: 20 || >=22}
 
   browserslist@4.28.8:
@@ -1863,13 +1860,13 @@ snapshots:
 
   '@navikt/ds-css@8.7.0': {}
 
-  '@navikt/ds-react@8.7.0(@types/react@19.2.15)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@navikt/ds-react@8.7.0(@types/react@19.2.17)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@floating-ui/react': 0.27.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@floating-ui/react-dom': 2.1.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@navikt/aksel-icons': 8.7.0
       '@navikt/ds-tokens': 8.7.0
-      '@types/react': 19.2.15
+      '@types/react': 19.2.17
       date-fns: 4.1.0
       react: 19.2.4
       react-day-picker: 9.7.0(react@19.2.4)
@@ -2076,10 +2073,6 @@ snapshots:
     dependencies:
       '@types/react': 19.2.17
 
-  '@types/react@19.2.15':
-    dependencies:
-      csstype: 3.2.3
-
   '@types/react@19.2.17':
     dependencies:
       csstype: 3.2.3
@@ -2252,7 +2245,7 @@ snapshots:
 
   baseline-browser-mapping@2.11.20: {}
 
-  brace-expansion@5.0.9:
+  brace-expansion@5.0.12:
     dependencies:
       balanced-match: 4.0.4
 
@@ -2540,7 +2533,7 @@ snapshots:
 
   minimatch@10.2.5:
     dependencies:
-      brace-expansion: 5.0.9
+      brace-expansion: 5.0.12
 
   mlly@1.8.2:
     dependencies:
