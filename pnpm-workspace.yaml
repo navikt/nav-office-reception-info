@@ -2,4 +2,4 @@ allowBuilds:
     '@parcel/watcher': false
     '@swc/core': false
     esbuild: false
-minimumReleaseAge: 5760
+minimumReleaseAge: 4320
